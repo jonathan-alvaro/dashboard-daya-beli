@@ -28,7 +28,7 @@ df_pred_qoq = df_qoq.tail(1)
 tgl = pd.to_datetime('30-06-2019', format='%d-%m-%Y')
 df_pred_qoq = df_pred_qoq.append({'quarter-tahun':tgl, 'daya_beli' : -2}, ignore_index=True)
 
-
+inflation_qoq = pd.read_csv("https://gist.githubusercontent.com/jonathan-alvaro/52e096ea9d7decd128988bed72aa9cfb/raw/bb5085f1a6f9a3da5da2598aac695914732acd47/qoq.csv")
 
 df_yoy = pd.read_csv("https://gist.githubusercontent.com/yudiwbs/a447d01c52b359502147af679ca5f6f6/raw/c5d7677122594a5d1b10ff5f56a855a5d2d859b8/gistfile1.txt")
 df_yoy["quarter-tahun"] =  df_yoy.apply(lambda row: q_ke_tgl(row['Quarter'],row['Tahun']), axis=1)
@@ -75,6 +75,12 @@ app.layout = html.Div( children=[
                                         y=df_pred_qoq["daya_beli"],
                                         mode='lines+markers',
                                         name='Daya Beli QoQ Prediksi'
+                                    ),
+                                    go.Scatter(
+                                        x=df_qoq["quarter-tahun"],
+                                        y=inflation_qoq["Inflasi(QoQ)"],
+                                        mode='lines+markers',
+                                        name='Inflasi QoQ'
                                     )
                                 ],
                                 'layout': {
@@ -105,6 +111,12 @@ app.layout = html.Div( children=[
                                         y=df_pred_yoy["Daya Beli Nasional"],
                                         mode='lines+markers',
                                         name='Daya Beli YoY Prediksi'
+                                    ),
+                                    go.Scatter(
+                                        x=df_yoy["quarter-tahun"],
+                                        y=df_yoy["Inflation"],
+                                        mode='lines+markers',
+                                        name='Inflasi YoY'
                                     )
                                 ],
                                 'layout': {
