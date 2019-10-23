@@ -6,14 +6,24 @@ var map = L.map('map', {
     zoom: 5
 });
 
-function getColor(d) {
-    return d > 0.5 ?    '#31a354':
-                        '#f03b20'
+function getColor(d, reference) {
+    console.log(reference)
+    if (typeof(reference) === 'undefined') {
+        reference = 0.5;
+    }
+    var retval =    d > reference ?     '#31a354':
+                    d < reference ?     '#f03b20' :
+                                        '#fec44f';
+    console.log("d:" + d);
+    console.log(`ref:${reference}`);
+    console.log(`Out:${retval}`);
+    return retval
+                        
 }
 
 function style(feature) {
     if (typeof feature.properties.growth === 'undefined') {
-        feature.properties.growth = Math.random();
+        feature.properties.growth = (Math.random() * 3 + 20) * 10000;
     }
     return {
         fillColor: getColor(feature.properties.growth),
@@ -33,13 +43,10 @@ function highlightFeature(e) {
         fillOpacity: 0.7
     })
     layer.bindPopup("growth: " + String(layer.feature.properties.growth).substring(0, 4)).openPopup();
-
-    info.update(get_index_data());
 }
 
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
-    info.update();
     e.target.closePopup();
 }
 
@@ -70,9 +77,8 @@ function render_control(map, info){
     }
 
     info.update = function (new_index) {
-        console.log(new_index)
         this._div.innerHTML = '<h4>National Info</h4>' + (
-            '<p>Indeks 10 komoditas: ' + String(new_index) + '</p>'
+            '<p>Indeks 10 komoditas: <span>' + String(new_index) + '</span></p>'
         );
     }
 

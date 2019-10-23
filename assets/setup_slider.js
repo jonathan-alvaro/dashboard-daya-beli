@@ -22,5 +22,20 @@ slider.oninput = function() {
 
         var year_data = data[timecode];
         update_control(year_data);
+
+        geojson.setStyle((feature) => {
+            var info_div = info._div
+            var p = (info_div.children)[1]
+            var national_growth = parseFloat((p.children)[0].innerHTML)
+            return {
+                fillColor: getColor(feature.properties.growth, national_growth),
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            };
+        });
+        geojson.resetStyle();
     });
 }
