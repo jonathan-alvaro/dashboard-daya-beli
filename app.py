@@ -54,7 +54,8 @@ x = x.diff().fillna(0)
 x = scaler.transform(x)
 
 preds = model.predict(x)
-
+print(preds)
+print(preds[-7:])
 
 df_qoq = pd.read_csv("https://gist.githubusercontent.com/yudiwbs/ed50c1de101f2d0ebaf118540d6c2656/raw/0039e7093fc0ce3356af7ca5e6991d6f8a05d6e3/daya_beli_qoq.csv")
 df_qoq["label"] = (
@@ -187,14 +188,14 @@ app.layout = html.Div( children=[
                             figure={
                                 'data': [
                                     go.Scatter(
-                                       x= label_df['label'],
-                                       y=y,
+                                       x= label_df['label'].tail(7),
+                                       y=y[-7:],
                                        mode='lines+markers',
                                        name='Daya beli sesungguhnya'
                                     ),
                                     go.Scatter(
-                                       x= label_df['label'],
-                                       y=preds,
+                                       x= label_df['label'].tail(7),
+                                       y=preds[-7:],
                                        mode='lines+markers',
                                        name='Daya beli prediksi'
                                     )
