@@ -57,7 +57,7 @@ app.layout = html.Div( children=[
     html.H1(children='Sistem Peringatan Dini Daya Beli',style={'textAlign': 'center','color': colors['text']}),
     html.Div([
         dcc.Tabs(id="tabs", children=[
-            dcc.Tab(label='Ringkasan', children=[
+            dcc.Tab(label='Daya Beli', children=[
                 html.Div([
                     html.Div([
                         dcc.Graph(
@@ -120,10 +120,10 @@ app.layout = html.Div( children=[
                     ],style={'width': '45%', 'verticalAlign':'top', 'display': 'inline-block', 'margin': '0px 5px 5px 5px', 'border': '1px solid #000'})
                 ])
             ]),
-            dcc.Tab(label='Peta', children=[
+            dcc.Tab(label='Indeks 10 Komoditas', children=[
                 html.Iframe(id='map-frame', src='assets/test_map.html', width='100%', height='600')
             ]),
-            dcc.Tab(label='Rincian', children=[
+            dcc.Tab(label='Model', children=[
                 #==========================================================================================
                 html.Div([
                     html.Div([
