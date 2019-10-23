@@ -1,3 +1,7 @@
+import os
+from joblib import dump, load
+from sklearn.metrics import mean_squared_error
+
 import dash
 import dash_core_components as dcc
 import plotly.graph_objs as go
@@ -6,7 +10,13 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
+def load_model():
+    model_path = os.path.join('models', 'predictor.pkl')
+    return load(model_path)
 
+def load_scaler():
+    scaler_path = os.path.join('models', 'scaler.pkl')
+    return load(scaler_path)
 
 def q_ke_tgl(quarter,tahun):
     q = int(quarter)
@@ -21,7 +31,36 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 #external_stylesheets = []
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+model = load_model()
+scaler = load_scaler()
+prediction_data = pd.read_csv(os.path.join('data', 'all_merged.csv'))
 
+label_df = prediction_data.copy()[['Tahun', 'Quarter']]
+label_df['label'] = (
+    label_df['Tahun'].apply(str) + '-Q' + label_df['Quarter'].apply(str)
+)
+label_df = label_df.drop(['Tahun', 'Quarter'], axis=1)
+label_df = label_df.shift(-1)
+label_df['label'] = label_df['label'].fillna('2019-Q2')
+prediction_data.drop(
+    ['Inflasi(QoQ)', 'Growth Pendapatan(QoQ)', 'Tahun', 'GDP PPP'],
+    axis=1,
+    inplace=True
+)
+
+y = prediction_data['Daya Beli'].values
+x = prediction_data.drop('Daya Beli', axis=1)
+x = x.diff().fillna(0)
+x = scaler.transform(x)
+
+preds = model.predict(x)
+print(label_df)
+print('----------------------------------')
+print(x)
+print('----------------------------------')
+print(y)
+print('----------------------------------')
+print(preds)
 
 df_qoq = pd.read_csv("https://gist.githubusercontent.com/yudiwbs/ed50c1de101f2d0ebaf118540d6c2656/raw/0039e7093fc0ce3356af7ca5e6991d6f8a05d6e3/daya_beli_qoq.csv")
 df_pred_qoq = df_qoq.tail(1)
@@ -151,69 +190,27 @@ app.layout = html.Div( children=[
                             figure={
                                 'data': [
                                     go.Scatter(
-                                       x= df_ihk_gdp["quarter-tahun"],
-                                       y=df_ihk_gdp["pct_total_yoy"],
+                                       x= label_df['label'],
+                                       y=y,
                                        mode='lines+markers',
-                                       name='Penghasilan YoY'
+                                       name='Daya beli sesungguhnya'
                                     ),
                                     go.Scatter(
-                                       x= df_ihk_gdp["quarter-tahun"],
-                                       y=df_ihk_gdp["ihk_yoy"],
+                                       x= label_df['label'],
+                                       y=preds,
                                        mode='lines+markers',
-                                       name='IHK YoY'
+                                       name='Daya beli prediksi'
                                     )
                                 ],
                                 'layout': {
-                                    'title': 'Penghasilan dan IHK YoY',
+                                    'title': 'Prediksi vs data (QoQ)',
                                     'font': {
                                         'color': colors['text']
                                     }
                                 }
                             }
                         ),
-                        ],style={'width': '90%', 'verticalAlign':'top', 'display': 'inline-block', 'margin': '0px 0px 5px 0px', 'border': '1px solid #000'}),
-                    html.Div([
-                        dcc.Graph(
-                            id='motor-yoy-graph',
-                            figure={
-                                'data': [
-                                    go.Scatter(
-                                       x= df_motor_yoy["quarter-tahun"],
-                                       y= df_motor_yoy["pct_yoy"],
-                                       mode='lines+markers',
-                                       name='Daya Beli QoQ'
-                                    )
-                                ],
-                                'layout': {
-                                    'title': 'Motor YoY',
-                                    'font': {
-                                        'color': colors['text']
-                                    }
-                                }
-                            }
-                        ),
-                        ],style={'width': '45%', 'verticalAlign':'top', 'display': 'inline-block', 'margin': '0px 0px 5px 0px', 'border': '1px solid #000'}),
-                    html.Div([
-                        dcc.Graph(
-                            id='telur-yoy-graph',
-                            figure={
-                                'data': [
-                                    go.Scatter(
-                                       x= df_telur_yoy["quarter-tahun"],
-                                       y= df_telur_yoy["pct_telur_yoy"],
-                                       mode='lines+markers',
-                                       name='Harga Telur YoY'
-                                    )
-                                ],
-                                'layout': {
-                                    'title': 'Telur  YoY',
-                                    'font': {
-                                        'color': colors['text']
-                                    }
-                                }
-                            }
-                        ),
-                    ],style={'width': '45%', 'verticalAlign':'top', 'display': 'inline-block', 'margin': '0px 5px 5px 5px', 'border': '1px solid #000'})
+                        ],style={'width': '90%', 'verticalAlign':'top', 'display': 'inline-block', 'margin': '0px 0px 5px 0px', 'border': '1px solid #000'})
                 ])
             ])
         ],style={'width': '60%','margin': '50px 0px 0px 0px'})
