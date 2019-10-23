@@ -9,68 +9,12 @@
 <body>
     <div id="map"></div>
     <div class ="sliderContainer">
-        <input type="range" min="1" max="10" value="50" class="slider" id="timeSlider">
-        <p>Time: <span id="sliderValue"></span></p>
+        <input type="range" min="2" max="15" value="1" class="slider" id="timeSlider">
+        <p>Period: <span id="sliderValue">2013-Q1</span></p>
     </div>
 
     <script src="./load_data.js" type="text/javascript"></script>
     <script src="./indonesia-prov.js" type="text/javascript"></script>
-    <script>
-        function getColor(d) {
-            return d > 0.5 ?    '#31a354':
-                                '#f03b20'
-        }
-
-        function style(feature) {
-            if (typeof feature.properties.growth === 'undefined') {
-                feature.properties.growth = Math.random();
-            }
-            return {
-                fillColor: getColor(feature.properties.growth),
-                weight: 2,
-                opacity: 1,
-                color: 'white',
-                dashArray: '3',
-                fillOpacity: 0.7
-            };
-        }
-
-        var geojson;
-
-        function highlightFeature(e) {
-            var layer = e.target;
-            layer.setStyle({
-                weight: 5,
-                dashArray: '',
-                fillOpacity: 0.7
-            })
-            layer.bindPopup("growth: " + String(layer.feature.properties.growth).substring(0, 4)).openPopup();
-        }
-
-        function resetHighlight(e) {
-            geojson.resetStyle(e.target);
-            e.target.closePopup();
-        }
-
-        function onEachFeature(feature, layer) {
-            layer.on({
-                mouseover: highlightFeature,
-                mouseout: resetHighlight
-            });
-        }
-
-        var map = L.map('map', {
-            minZoom: 5,
-            maxZoom: 5,
-            zoom: 5
-        });
-
-        map.panTo(new L.LatLng(-5, 120));
-
-        geojson = L.geoJSON(indonesia, {
-            style: style,
-            onEachFeature: onEachFeature
-        }).addTo(map);
-    </script>
+    <script src="./render_map.js" type="text/javascript"></script>
     <script src="./setup_slider.js" type="text/javascript"></script>
 </body>
