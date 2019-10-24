@@ -10,7 +10,7 @@ const port = 4000;
 app.use(cors());
 
 app.get('/api', (req, res) => {
-    const json_path = path.join(__dirname, '../', 'yoy.json');
+    const json_path = path.join(__dirname, '../', 'data', 'yoy.json');
     const json_string = fs.readFileSync(json_path, {'encoding':'utf-8'});
 
     res.setHeader('Content-Type', 'application/json');
@@ -18,11 +18,19 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/index_data', (req, res) => {
-    const json_path = path.join(__dirname, '../', 'index_data.json');
+    const json_path = path.join(__dirname, '../', 'data', 'index_data.json');
     const json_string = fs.readFileSync(json_path, {'encoding':'utf-8'});
 
     res.setHeader('Content-Type', 'application/json');
     res.status(200).send(json_string);
-})
+});
+
+app.get('/province_food', (req, res) => {
+    const json_path = path.join(__dirname, '../', 'data', 'food_per_province.json');
+    const json_string = fs.readFileSync(json_path, {'encoding':'utf-8'});
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).send(json_string);
+});
 
 app.listen(port, () => console.log('Request sent'));
