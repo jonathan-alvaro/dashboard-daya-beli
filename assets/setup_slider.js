@@ -26,9 +26,9 @@ slider.oninput = function() {
         geojson.setStyle((feature) => {
             var info_div = info._div
             var p = (info_div.children)[1]
-            var national_growth = parseFloat((p.children)[0].innerHTML)
+            var national_index = parseFloat((p.children)[0].innerHTML)
             return {
-                fillColor: getColor(feature.properties.growth, national_growth),
+                fillColor: getColor(feature.properties.index, national_index),
                 weight: 2,
                 opacity: 1,
                 color: 'white',

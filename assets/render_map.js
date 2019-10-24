@@ -6,27 +6,25 @@ var map = L.map('map', {
     zoom: 5
 });
 
+// Function for color per province
 function getColor(d, reference) {
-    console.log(reference)
     if (typeof(reference) === 'undefined') {
-        reference = 0.5;
+        reference = 210000;
     }
     var retval =    d > reference ?     '#31a354':
                     d < reference ?     '#f03b20' :
                                         '#fec44f';
-    console.log("d:" + d);
-    console.log(`ref:${reference}`);
-    console.log(`Out:${retval}`);
     return retval
                         
 }
 
+// How to color each province
 function style(feature) {
-    if (typeof feature.properties.growth === 'undefined') {
-        feature.properties.growth = (Math.random() * 3 + 20) * 10000;
+    if (typeof feature.properties.index === 'undefined') {
+        feature.properties.index = (Math.random() * 3 + 20) * 10000;
     }
     return {
-        fillColor: getColor(feature.properties.growth),
+        fillColor: getColor(feature.properties.index),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -35,6 +33,7 @@ function style(feature) {
     };
 }
 
+// On hover styling
 function highlightFeature(e) {
     var layer = e.target;
     layer.setStyle({
@@ -42,7 +41,21 @@ function highlightFeature(e) {
         dashArray: '',
         fillOpacity: 0.7
     })
-    layer.bindPopup("Index: " + String(layer.feature.properties.growth).substring(0, 4)).openPopup();
+    var province_json = get_province_food_data();
+    province_json.then((food_province_json) => {
+        var data = JSON.parse(food_province_json);
+        var time_label = document.getElementById("sliderValue").innerHTML;
+        var province_data = data[time_label][layer.feature.properties.ID];
+        var commodities = Object.keys(province_data);
+
+        var popup_string = "Index: " + String(layer.feature.properties.index) + "<br />";
+
+        for (idx in commodities) {
+            popup_string = popup_string + commodities[idx] + ": " + String(province_data[commodities[idx]]) + "<br />";
+        }
+        layer.bindPopup(popup_string).openPopup();
+    });
+    // layer.bindPopup("Index: " + String(layer.feature.properties.index)).openPopup();
 }
 
 function resetHighlight(e) {
