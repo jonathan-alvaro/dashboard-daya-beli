@@ -54,8 +54,6 @@ x = x.diff().fillna(0)
 x = scaler.transform(x)
 
 preds = model.predict(x)
-print(preds)
-print(preds[-7:])
 
 df_qoq = pd.read_csv("https://gist.githubusercontent.com/yudiwbs/ed50c1de101f2d0ebaf118540d6c2656/raw/0039e7093fc0ce3356af7ca5e6991d6f8a05d6e3/daya_beli_qoq.csv")
 df_qoq["label"] = (
@@ -63,6 +61,13 @@ df_qoq["label"] = (
 )
 df_pred_qoq = label_df.tail(2)
 df_pred_qoq['Daya Beli'] = [y[-1], preds[-1]]
+
+if y[-1] > preds[-1]:
+    color = 'rgb(240, 59, 32)'
+elif y[-1] < preds[-1]:
+    color = 'rgb(49, 163, 84)'
+else:
+    color = 'rgb(240, 196, 79)'
 
 inflation_qoq = pd.read_csv("https://gist.githubusercontent.com/jonathan-alvaro/52e096ea9d7decd128988bed72aa9cfb/raw/bb5085f1a6f9a3da5da2598aac695914732acd47/qoq.csv")
 inflation_qoq["label"] = (
@@ -113,7 +118,9 @@ app.layout = html.Div( children=[
                                         x=df_pred_qoq["label"],
                                         y=df_pred_qoq["Daya Beli"],
                                         mode='lines+markers',
-                                        name='Daya Beli QoQ Prediksi'
+                                        name='Daya Beli QoQ Prediksi',
+                                        line={'color':color},
+                                        marker={'color':color}
                                     ),
                                     go.Scatter(
                                         x=df_qoq["label"],
@@ -129,6 +136,15 @@ app.layout = html.Div( children=[
                                     }
                                 }
                             }
+                        ),
+                        html.P(
+                            (
+                                "Prediksi "
+                                + str(df_pred_qoq["label"].tail(1).values[0])
+                                + ': '
+                                + str(df_pred_qoq["Daya Beli"].tail(1).values[0])
+                            ),
+                            style={'textAlign': 'center'}
                         )
                         ],style={'width': '45%', 'verticalAlign':'top', 'display': 'inline-block', 'margin': '0px 0px 5px 0px', 'border': '1px solid #000'}),
 
@@ -138,20 +154,22 @@ app.layout = html.Div( children=[
                             figure={
                                 'data': [
                                     go.Scatter(
-                                       x= df_yoy["quarter-tahun"],
-                                       y= df_yoy["Daya Beli Nasional"],
+                                       x= df_qoq["label"],
+                                       y= df_qoq["daya_beli"],
                                        mode='lines+markers',
                                        name='Daya Beli YoY'
                                     ),
                                     go.Scatter(
-                                        x=df_pred_yoy["quarter-tahun"],
-                                        y=df_pred_yoy["Daya Beli Nasional"],
+                                        x=df_pred_qoq["label"],
+                                        y=df_pred_qoq["Daya Beli"],
                                         mode='lines+markers',
-                                        name='Daya Beli YoY Prediksi'
+                                        name='Daya Beli YoY Prediksi',
+                                        line={'color':color},
+                                        marker={'color':color}
                                     ),
                                     go.Scatter(
-                                        x=df_yoy["quarter-tahun"],
-                                        y=df_yoy["Inflation"],
+                                        x=df_qoq["label"],
+                                        y=inflation_qoq["Inflasi(QoQ)"],
                                         mode='lines+markers',
                                         name='Inflasi YoY'
                                     )
@@ -164,8 +182,15 @@ app.layout = html.Div( children=[
                                 }
                             }
                         ),
-                        html.H3(children='Prediksi (Q2 2019): -1.00',style={'textAlign': 'Center','color': colors['text_pred']}),
-                        html.P("Penjelasan: Prediksi diperoleh berdasarkan peningkatan harga telur (0.4) dan daging (0.5) dan penurunan harga bawang (0.2)", style={'padding': '5px 10px 5px 10px'})
+                        html.P(
+                            (
+                                "Prediksi "
+                                + str(df_pred_qoq["label"].tail(1).values[0])
+                                + ': '
+                                + str(df_pred_qoq["Daya Beli"].tail(1).values[0])
+                            ),
+                            style={'textAlign': 'center'}
+                        )
                     ],style={'width': '45%', 'verticalAlign':'top', 'display': 'inline-block', 'margin': '0px 5px 5px 5px', 'border': '1px solid #000'})
                 ])
             ]),
@@ -176,13 +201,31 @@ app.layout = html.Div( children=[
                 #==========================================================================================
                 html.Div([
                     html.Div([
-                        dcc.Dropdown(
-                        options=[
-                            {'label': 'QoQ', 'value': 'NYC'},
-                            {'label': u'YoY', 'value': 'MTL'},
-                        ],
-                        value='MTL',style={'width': '50%'}
-                    ),
+                        dcc.Graph(
+                            id='ihk-gdp-qoq-graph',
+                            figure={
+                                'data': [
+                                    go.Scatter(
+                                       x= label_df['label'].tail(7),
+                                       y=y[-7:],
+                                       mode='lines+markers',
+                                       name='Daya beli sesungguhnya'
+                                    ),
+                                    go.Scatter(
+                                       x= label_df['label'].tail(7),
+                                       y=preds[-7:],
+                                       mode='lines+markers',
+                                       name='Daya beli prediksi'
+                                    )
+                                ],
+                                'layout': {
+                                    'title': 'Prediksi vs data (QoQ)',
+                                    'font': {
+                                        'color': colors['text']
+                                    }
+                                }
+                            }
+                        ),
                         dcc.Graph(
                             id='ihk-gdp-yoy-graph',
                             figure={
@@ -201,7 +244,7 @@ app.layout = html.Div( children=[
                                     )
                                 ],
                                 'layout': {
-                                    'title': 'Prediksi vs data (QoQ)',
+                                    'title': 'Prediksi vs data (YoY)',
                                     'font': {
                                         'color': colors['text']
                                     }
