@@ -42,7 +42,7 @@ function highlightFeature(e) {
         dashArray: '',
         fillOpacity: 0.7
     })
-    layer.bindPopup("growth: " + String(layer.feature.properties.growth).substring(0, 4)).openPopup();
+    layer.bindPopup("Index: " + String(layer.feature.properties.growth).substring(0, 4)).openPopup();
 }
 
 function resetHighlight(e) {
