@@ -38,4 +38,4 @@ slider.oninput = function() {
         });
         geojson.resetStyle();
     });
-}
+};

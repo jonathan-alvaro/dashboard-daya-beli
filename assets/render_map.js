@@ -55,7 +55,6 @@ function highlightFeature(e) {
         }
         layer.bindPopup(popup_string).openPopup();
     });
-    // layer.bindPopup("Index: " + String(layer.feature.properties.index)).openPopup();
 }
 
 function resetHighlight(e) {
