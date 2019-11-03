@@ -8,9 +8,19 @@ var map = L.map('map', {
 
 // Function for color per province
 function getColor(d, reference) {
+
     if (typeof(reference) === 'undefined') {
-        reference = 210000;
+        if (typeof(info._div) !== 'undefined') {
+            var info_div = info._div;
+            var p = (info_div.children)[1];
+            var national_index = parseFloat((p.children)[0].innerHTML);
+            reference = national_index;
+        }
+        else {
+            reference=0;
+        }
     }
+
     var retval =    d > reference ?     '#31a354':
                     d < reference ?     '#f03b20' :
                                         '#fec44f';
@@ -21,7 +31,14 @@ function getColor(d, reference) {
 // How to color each province
 function style(feature) {
     if (typeof feature.properties.index === 'undefined') {
-        feature.properties.index = (Math.random() * 3 + 20) * 10000;
+        var data = get_food_data();
+
+        data.then((res) => {
+            var res = JSON.parse(res);
+            var output = document.getElementById("sliderValue");
+            var province_data = res[output.innerHTML][String(feature.properties.ID)];
+            feature.properties.index = province_data['index'];
+        });
     }
     return {
         fillColor: getColor(feature.properties.index),
@@ -41,17 +58,22 @@ function highlightFeature(e) {
         dashArray: '',
         fillOpacity: 0.7
     })
-    var province_json = get_province_food_data();
+    var province_json = get_food_data();
     province_json.then((food_province_json) => {
         var data = JSON.parse(food_province_json);
         var time_label = document.getElementById("sliderValue").innerHTML;
         var province_data = data[time_label][layer.feature.properties.ID];
         var commodities = Object.keys(province_data);
 
-        var popup_string = "Index: " + String(layer.feature.properties.index) + "<br />";
+        var index = layer.feature.properties.index;
+        if (typeof index !== 'undefined') {
+            index = index.toFixed(2);
+        }
+
+        var popup_string = "Index: " + String(index) + "<br />";
 
         for (idx in commodities) {
-            popup_string = popup_string + commodities[idx] + ": " + String(province_data[commodities[idx]]) + "<br />";
+            popup_string = popup_string + commodities[idx] + ": " + String(province_data[commodities[idx]].toFixed(2)) + "<br />";
         }
         layer.bindPopup(popup_string).openPopup();
     });
@@ -99,8 +121,22 @@ function render_control(map, info){
     return info
 }
 
-function update_control(new_val){
-    info.update(new_val)
+function update_control(new_year_data){
+    national_data = new_year_data['-1'];
+
+    index_value = national_data['index'];
+    info_string = '<h4>National Info</h4>' + (
+        "<p>Indeks: <span>" + String(index_value.toFixed(2)) + "</span></p>"
+    );
+
+    for (variable in national_data) {
+        if (variable == 'index') {
+            continue;
+        }
+        info_string = info_string + `<p>${variable}: ${national_data[variable].toFixed(2)}</p>`;
+    }
+
+    info._div.innerHTML = info_string;
 }
 
 render_map(map);

@@ -3,7 +3,7 @@ var slider = document.getElementById("timeSlider");
 slider.oninput = function() {
     var slider = document.getElementById("timeSlider");
     var output = document.getElementById("sliderValue");
-    var json = get_index_data();
+    var json = get_food_data();
     json.then(function(res) {
         var data = JSON.parse(res);
         var quarter_change = slider.value;

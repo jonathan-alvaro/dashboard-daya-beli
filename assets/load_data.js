@@ -28,11 +28,11 @@ function get_index_data() {
     });
 }
 
-function get_province_food_data() {
+function get_food_data() {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
 
-        xhr.open("GET","http://localhost:4000/province_food",true);
+        xhr.open("GET","http://localhost:4000/data/food",true);
         xhr.send();
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
