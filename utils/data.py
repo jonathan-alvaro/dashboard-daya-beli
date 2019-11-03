@@ -18,6 +18,24 @@ def load_qoq_data(csv_path) -> (pd.DataFrame, pd.Series, pd.Series):
     return (X, y, timestamps)
 
 
+def load_yoy_data(csv_path) -> (pd.DataFrame, pd.Series, pd.Series):
+    df = pd.read_csv(csv_path)
+
+    timestamps = create_timestamp(df['Tahun'], df['Quarter'])
+
+    y = df['Daya Beli GDP']
+    X = df.drop(
+        ['Inflation', 'Daya Beli GDP', 'Tahun', 'Motorcycle Sales'],
+        axis=1
+    ).diff().fillna(0)
+
+    X['Quarter'] = df['Quarter']
+
+    print(df)
+
+    return (X, y, timestamps)
+
+
 def create_timestamp(years: pd.Series, quarters: pd.Series) -> pd.Series:
     timestamps = years.apply(str) + '-Q' + quarters.apply(str)
     return timestamps

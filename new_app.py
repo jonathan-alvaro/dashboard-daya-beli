@@ -26,6 +26,10 @@ qoq_X, qoq_y, qoq_timestamps = load_qoq_data(
 qoq_X = scaler.transform(qoq_X)
 qoq_preds = model.predict(qoq_X)
 
+# Load YoY data
+yoy_X, yoy_y, yoy_timestamps = load_yoy_data(
+    os.path.join('data', 'yoy_complete.csv')
+)
 
 # Import CSS stylesheets
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -37,7 +41,8 @@ app.layout = html.Div([
         id='menu-dropdown',
         options=[
             {'label': 'Forecast', 'value': 'forecast'},
-            {'label': 'Index 10 Komoditas Strategis', 'value': 'index'}
+            {'label': 'Index 10 Komoditas Strategis', 'value': 'index'},
+            {'label': 'Variabel Non-Pangan', 'value': 'non-food'}
         ],
         style={
             'marginBottom': '1em'
@@ -49,6 +54,33 @@ app.layout = html.Div([
     )
 ])
 
+
+def create_non_food_variable_graphs(predictors, targets):
+    graphs = []
+    
+    for col in predictors:
+        if col == 'Quarter':
+            print(predictors[col])
+        graph = dcc.Graph(
+            figure=go.Figure(
+                data = [
+                    go.Scatter(
+                        x=predictors[col], 
+                        y=targets.values,
+                        mode='markers'
+                    )
+                ], layout= go.Layout(
+                    title={
+                        'text': '{} vs Daya Beli'.format(col),
+                        'xanchor': 'center',
+                        'x': 0.5
+                    }
+                )
+            )
+        )
+        graphs.append(graph)
+    
+    return graphs
 
 @app.callback(
     Output('content-div', 'children'),
@@ -64,6 +96,8 @@ def refresh_content(selected_menu):
             width='100%',
             height='600'
         )
+    elif selected_menu == 'non-food':
+        return create_non_food_variable_graphs(yoy_X, yoy_y)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
