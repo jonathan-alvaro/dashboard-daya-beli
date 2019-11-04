@@ -31,8 +31,6 @@ def load_yoy_data(csv_path) -> (pd.DataFrame, pd.Series, pd.Series):
 
     X['Quarter'] = df['Quarter']
 
-    print(df)
-
     return (X, y, timestamps)
 
 

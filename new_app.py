@@ -12,14 +12,16 @@ import numpy as np
 from utils.model import *
 from utils.data import *
 
+model_dir = 'models'
+data_dir = 'data'
 
 # Load trained scaler and model
-model = load_model(os.path.join('models', 'predictor.pkl'))
-scaler = load_scaler(os.path.join('models', 'scaler.pkl'))
+model = load_model(os.path.join(model_dir, 'predictor.pkl'))
+scaler = load_scaler(os.path.join(model_dir, 'scaler.pkl'))
 
 # Load QoQ data
 qoq_X, qoq_y, qoq_timestamps = load_qoq_data(
-    os.path.join('data', 'all_merged.csv')
+    os.path.join(data_dir, 'all_merged.csv')
 )
 
 # Forecast future data using scaled predictors
@@ -28,12 +30,15 @@ qoq_preds = model.predict(qoq_X)
 
 # Load YoY data
 yoy_X, yoy_y, yoy_timestamps = load_yoy_data(
-    os.path.join('data', 'yoy_complete.csv')
+    os.path.join(data_dir, 'yoy_complete.csv')
 )
 
 # Import CSS stylesheets
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+# Expose flask serve for deployment
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
 
 # Determine HTML layout
 app.layout = html.Div([
@@ -55,26 +60,30 @@ app.layout = html.Div([
 ])
 
 
-def create_non_food_variable_graphs(predictors, targets):
+def create_non_food_variable_graphs(predictors, targets, timestamps):
     graphs = []
     
     for col in predictors:
-        if col == 'Quarter':
-            print(predictors[col])
         graph = dcc.Graph(
             figure=go.Figure(
                 data = [
-                    go.Scatter(
-                        x=predictors[col], 
-                        y=targets.values,
-                        mode='markers'
+                    go.Line(
+                        x=timestamps, 
+                        y=predictors[col],
+                        name=col
+                    ),
+                    go.Line(
+                        x=timestamps,
+                        y=targets,
+                        name='Daya Beli'
                     )
                 ], layout= go.Layout(
                     title={
                         'text': '{} vs Daya Beli'.format(col),
                         'xanchor': 'center',
                         'x': 0.5
-                    }
+                    },
+                    showlegend=True
                 )
             )
         )
@@ -97,7 +106,7 @@ def refresh_content(selected_menu):
             height='600'
         )
     elif selected_menu == 'non-food':
-        return create_non_food_variable_graphs(yoy_X, yoy_y)
+        return create_non_food_variable_graphs(yoy_X, yoy_y, yoy_timestamps)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
