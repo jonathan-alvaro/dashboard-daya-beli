@@ -23,6 +23,12 @@ slider.oninput = function() {
         var year_data = data[timecode];
         update_control(year_data);
 
+        geojson.eachLayer((layer) => {
+            var id = layer.feature.properties.ID;
+            layer.feature.properties.index = year_data[id]['index'];
+            console.log(layer.feature.properties.index);
+        });
+
         geojson.setStyle((feature) => {
             var info_div = info._div
             var p = (info_div.children)[1]
