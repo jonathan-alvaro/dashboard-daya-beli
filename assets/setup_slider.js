@@ -34,7 +34,7 @@ slider.oninput = function() {
             var p = (info_div.children)[1]
             var national_index = parseFloat((p.children)[0].innerHTML)
             return {
-                fillColor: getColor(feature.properties.index, national_index),
+                fillColor: getColor(feature.properties.index),
                 weight: 2,
                 opacity: 1,
                 color: 'white',

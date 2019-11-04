@@ -7,7 +7,7 @@ var map = L.map('map', {
 });
 
 // Function for color per province
-function getColor(d, reference) {
+function getColor(d) {
 
     if (typeof(reference) === 'undefined') {
         if (typeof(info._div) !== 'undefined') {
@@ -21,9 +21,13 @@ function getColor(d, reference) {
         }
     }
 
-    var retval =    d > reference ?     '#31a354':
-                    d < reference ?     '#f03b20' :
-                                        '#fec44f';
+    var retval = '#fec44f';
+
+    if (d < 2.25 || d > 4.25) {
+        retval = '#f03b20';
+    } else if (d > 2.25 && d < 4.25) {
+        retval = '#31a354';
+    }
     return retval
                         
 }
