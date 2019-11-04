@@ -7,7 +7,7 @@ slider.oninput = function() {
     json.then(function(res) {
         var data = JSON.parse(res);
         var quarter_change = slider.value;
-        var year = 2016;
+        var year = 2017;
         var quarter = 0;
         if (quarter_change % 4 == 0) {
             year = year + quarter_change / 4 - 1;
