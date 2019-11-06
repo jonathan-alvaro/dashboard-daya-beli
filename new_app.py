@@ -49,6 +49,7 @@ app.layout = html.Div([
             {'label': 'Index 10 Komoditas Strategis', 'value': 'index'},
             {'label': 'Variabel Non-Pangan', 'value': 'non-food'}
         ],
+        value='forecast',
         style={
             'marginBottom': '1em'
         }
