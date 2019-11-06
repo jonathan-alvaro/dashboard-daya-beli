@@ -45,9 +45,9 @@ app.layout = html.Div([
     dcc.Dropdown(
         id='menu-dropdown',
         options=[
-            {'label': 'Forecast', 'value': 'forecast'},
-            {'label': 'Index 10 Komoditas Strategis', 'value': 'index'},
-            {'label': 'Variabel Non-Pangan', 'value': 'non-food'}
+            {'label': 'Nowcasting Daya Beli', 'value': 'forecast'},
+            {'label': 'Ukuran Daya Beli (Ukuran Indeks 10 Komoditas Strategis)', 'value': 'index'},
+            {'label': 'Ukuran Daya Beli (Variabel Non-Pangan)', 'value': 'non-food'}
         ],
         value='forecast',
         style={
@@ -71,18 +71,28 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                     go.Line(
                         x=timestamps, 
                         y=predictors[col],
-                        name=col
+                        name=col,
+                        yaxis='y2'
                     ),
                     go.Line(
                         x=timestamps,
                         y=targets,
-                        name='Daya Beli'
+                        name='Daya Beli',
+                        yaxis='y'
                     )
                 ], layout= go.Layout(
                     title={
                         'text': '{} vs Daya Beli'.format(col),
                         'xanchor': 'center',
                         'x': 0.5
+                    },
+                    yaxis={
+                        'title':'Change Daya Beli (%)'
+                    },
+                    yaxis2={
+                        'title':f'Change {col} (%)',
+                        'side':'right',
+                        'overlaying':'y'
                     },
                     showlegend=True
                 )
