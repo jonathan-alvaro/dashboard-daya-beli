@@ -9,6 +9,7 @@ import dash_html_components as html
 import pandas as pd
 import numpy as np
 
+from utils.app import *
 from utils.model import *
 from utils.data import *
 
@@ -60,55 +61,25 @@ app.layout = html.Div([
     )
 ])
 
-
-def create_non_food_variable_graphs(predictors, targets, timestamps):
-    graphs = []
-    
-    for col in predictors:
-        graph = dcc.Graph(
-            figure=go.Figure(
-                data = [
-                    go.Line(
-                        x=timestamps, 
-                        y=predictors[col],
-                        name=col,
-                        yaxis='y2'
-                    ),
-                    go.Line(
-                        x=timestamps,
-                        y=targets,
-                        name='Daya Beli',
-                        yaxis='y'
-                    )
-                ], layout= go.Layout(
-                    title={
-                        'text': '{} vs Daya Beli'.format(col),
-                        'xanchor': 'center',
-                        'x': 0.5
-                    },
-                    yaxis={
-                        'title':'Change Daya Beli (%)'
-                    },
-                    yaxis2={
-                        'title':f'Change {col} (%)',
-                        'side':'right',
-                        'overlaying':'y'
-                    },
-                    showlegend=True
-                )
-            )
-        )
-        graphs.append(graph)
-    
-    return graphs
-
 @app.callback(
     Output('content-div', 'children'),
     [Input('menu-dropdown', 'value')]
 )
 def refresh_content(selected_menu):
     if selected_menu == 'forecast':
-        return "Forecast Placeholder"
+        qoq_data = prepare_forecast_data(qoq_timestamps, qoq_y, qoq_preds)
+        
+        graphs = []
+
+        graphs.append(html.Div(
+            plot_prediction_graph(qoq_data, 'QoQ'),
+            style={
+                'width':'50%'
+            }
+        ))
+
+        return graphs
+
     elif selected_menu == 'index':
         return html.Iframe(
             id='map-frame',
