@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 import plotly.graph_objects as go
@@ -45,11 +46,25 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
     return graphs
 
 
-def plot_prediction_graph(data, title):
-    past_data = data.drop(len(data) - 1)
-    prediction = data.tail(2).reset_index(drop=True)
+def plot_prediction_graph(timestamps, data, prediction, inflation, title):
 
-    if prediction['Daya Beli'].tail(1).values[0] < past_data.tail(1)['Daya Beli'].values[0]:
+    pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
+    pred_year = int(timestamps.tail(1).values[0][:4])
+
+    if pred_quarter > 4:
+        pred_quarter -= 4
+        pred_year += 1
+
+    timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
+    timestamps = timestamps.reset_index(drop=True)
+
+    prediction = pd.Series(prediction)
+    data = pd.Series(data)
+
+    prediction = np.append(data.tail(1).values, prediction.tail(1).values[0])
+    prediction = pd.Series(prediction)
+
+    if prediction.tail(1).values[0] < data.tail(1).values[0]:
         prediction_line_color = 'red'
     else:
         prediction_line_color = 'green'
@@ -58,20 +73,25 @@ def plot_prediction_graph(data, title):
             figure=go.Figure(
                 data = [
                     go.Line(
-                        x=past_data['label'], 
-                        y=past_data['Daya Beli'],
-                        name='Data Lampau',
+                        x=timestamps, 
+                        y=data,
+                        name='Daya Beli QoQ',
                         line={
                             'color':'blue'
                         }
                     ),
                     go.Line(
-                        x=prediction['label'],
-                        y=prediction['Daya Beli'],
-                        name='Forecast',
+                        x=timestamps.tail(2),
+                        y=prediction,
+                        name='Daya Beli QoQ Prediksi',
                         line={
                             'color':prediction_line_color
                         }
+                    ),
+                    go.Line(
+                        x=timestamps,
+                        y=inflation, 
+                        name='Inflasi QoQ'
                     )
                 ], layout= go.Layout(
                     title={
@@ -81,35 +101,10 @@ def plot_prediction_graph(data, title):
                     },
                     yaxis={
                         'title':{
-                            'text':f'{title} Growth for Daya Beli'
+                            'text':title
                         }
                     },
                     showlegend=True
                 )
             )
         )
-
-
-def prepare_forecast_data(timestamps, y, preds):
-    preds = pd.Series(preds)
-
-    data = y.tail(6)
-    data = data.append(preds.tail(1)).reset_index(drop=True)
-
-    pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
-    pred_year = int(timestamps.tail(1).values[0][:4])
-
-    if pred_quarter > 4:
-        pred_quarter = pred_quarter - 4
-        pred_year += 1
-
-    timestamps = timestamps.copy()
-    timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
-    timestamps = timestamps.tail(len(data)).reset_index(drop=True)
-    
-    data = pd.DataFrame({
-        'label': timestamps,
-        'Daya Beli': data
-    })
-
-    return data

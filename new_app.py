@@ -21,7 +21,7 @@ model = load_model(os.path.join(model_dir, 'predictor.pkl'))
 scaler = load_scaler(os.path.join(model_dir, 'scaler.pkl'))
 
 # Load QoQ data
-qoq_X, qoq_y, qoq_timestamps = load_qoq_data(
+qoq_X, qoq_y, qoq_inflation, qoq_timestamps = load_qoq_data(
     os.path.join(data_dir, 'all_merged.csv')
 )
 
@@ -30,7 +30,7 @@ qoq_X = scaler.transform(qoq_X)
 qoq_preds = model.predict(qoq_X)
 
 # Load YoY data
-yoy_X, yoy_y, yoy_timestamps = load_yoy_data(
+yoy_X, yoy_y, yoy_inflation, yoy_timestamps = load_yoy_data(
     os.path.join(data_dir, 'yoy_complete.csv')
 )
 
@@ -67,12 +67,12 @@ app.layout = html.Div([
 )
 def refresh_content(selected_menu):
     if selected_menu == 'forecast':
-        qoq_data = prepare_forecast_data(qoq_timestamps, qoq_y, qoq_preds)
-        
         graphs = []
 
         graphs.append(html.Div(
-            plot_prediction_graph(qoq_data, 'QoQ'),
+            plot_prediction_graph(
+                qoq_timestamps, qoq_y, qoq_preds, qoq_inflation, 'Daya Beli QoQ'
+            ),
             style={
                 'width':'50%'
             }
