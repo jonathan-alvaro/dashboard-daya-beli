@@ -1,6 +1,6 @@
 var slider = document.getElementById("timeSlider");
 
-slider.oninput = function() {
+function update_map() {
     var slider = document.getElementById("timeSlider");
     var output = document.getElementById("sliderValue");
     var json = get_food_data();
@@ -45,3 +45,6 @@ slider.oninput = function() {
         geojson.resetStyle();
     });
 };
+
+slider.oninput = update_map();
+update_map();
