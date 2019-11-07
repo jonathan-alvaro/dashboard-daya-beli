@@ -17,8 +17,10 @@ model_dir = 'models'
 data_dir = 'data'
 
 # Load trained scaler and model
-model = load_model(os.path.join(model_dir, 'predictor.pkl'))
-scaler = load_scaler(os.path.join(model_dir, 'scaler.pkl'))
+qoq_model = load_model(os.path.join(model_dir, 'qoq_model.pkl'))
+qoq_scaler = load_scaler(os.path.join(model_dir, 'qoq_scaler.pkl'))
+yoy_model = load_model(os.path.join(model_dir, 'yoy_model.pkl'))
+yoy_scaler = load_scaler(os.path.join(model_dir, 'yoy_scaler.pkl'))
 
 # Load QoQ data
 qoq_X, qoq_y, qoq_inflation, qoq_timestamps = load_qoq_data(
@@ -26,13 +28,17 @@ qoq_X, qoq_y, qoq_inflation, qoq_timestamps = load_qoq_data(
 )
 
 # Forecast future data using scaled predictors
-qoq_X = scaler.transform(qoq_X)
-qoq_preds = model.predict(qoq_X)
+qoq_X = qoq_scaler.transform(qoq_X)
+qoq_preds = qoq_model.predict(qoq_X)
 
 # Load YoY data
 yoy_X, yoy_y, yoy_inflation, yoy_timestamps = load_yoy_data(
     os.path.join(data_dir, 'yoy_complete.csv')
 )
+
+# # Forecast future data
+# yoy_X = yoy_scaler.transform(yoy_X)
+# yoy_preds = yoy_model.predict(yoy_X)
 
 # Import CSS stylesheets
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -74,7 +80,17 @@ def refresh_content(selected_menu):
                 qoq_timestamps, qoq_y, qoq_preds, qoq_inflation, 'Daya Beli QoQ'
             ),
             style={
-                'width':'50%'
+                'width':'50%',
+                'display':'inline-block'
+            }
+        ))
+
+        graphs.append(html.Div(
+            plot_prediction_graph_yoy(
+                yoy_timestamps, yoy_y, None, yoy_inflation, 'Daya Beli YoY'
+            ), style={
+                'width':'50%',
+                'display':'inline-block'
             }
         ))
 

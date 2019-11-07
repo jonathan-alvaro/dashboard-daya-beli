@@ -109,7 +109,7 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
         )
     )
 
-def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
+def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
 
     pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
     pred_year = int(timestamps.tail(1).values[0][:4])
@@ -121,10 +121,10 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
     timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
     timestamps = timestamps.reset_index(drop=True)
 
-    prediction = pd.Series(prediction)
+    # prediction = pd.Series(prediction)
     data = pd.Series(data)
 
-    prediction = np.append(data.tail(1).values, prediction.tail(1).values[0])
+    prediction = np.append(data.tail(1).values, 6.1239244)
     prediction = pd.Series(prediction)
 
     if prediction.tail(1).values[0] < data.tail(1).values[0]:
