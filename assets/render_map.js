@@ -1,9 +1,9 @@
 var geojson;
 var info = L.control();
 var map = L.map('map', {
-    minZoom: 5,
-    maxZoom: 5,
-    zoom: 5
+    minZoom: 4.7,
+    maxZoom: 4.7,
+    zoom: 4.7
 });
 
 // Function for color per province
@@ -96,7 +96,7 @@ function onEachFeature(feature, layer) {
 }
 
 function render_map(map){
-    map.panTo(new L.LatLng(-5, 120));
+    map.panTo(new L.LatLng(-5, 117.5));
 
     geojson = L.geoJSON(indonesia, {
         style: style,

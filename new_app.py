@@ -70,7 +70,7 @@ def refresh_content(selected_menu):
         graphs = []
 
         graphs.append(html.Div(
-            plot_prediction_graph(
+            plot_prediction_graph_qoq(
                 qoq_timestamps, qoq_y, qoq_preds, qoq_inflation, 'Daya Beli QoQ'
             ),
             style={

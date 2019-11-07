@@ -46,7 +46,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
     return graphs
 
 
-def plot_prediction_graph(timestamps, data, prediction, inflation, title):
+def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
 
     pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
     pred_year = int(timestamps.tail(1).values[0][:4])
@@ -70,41 +70,104 @@ def plot_prediction_graph(timestamps, data, prediction, inflation, title):
         prediction_line_color = 'green'
 
     return dcc.Graph(
-            figure=go.Figure(
-                data = [
-                    go.Line(
-                        x=timestamps, 
-                        y=data,
-                        name='Daya Beli QoQ',
-                        line={
-                            'color':'blue'
-                        }
-                    ),
-                    go.Line(
-                        x=timestamps.tail(2),
-                        y=prediction,
-                        name='Daya Beli QoQ Prediksi',
-                        line={
-                            'color':prediction_line_color
-                        }
-                    ),
-                    go.Line(
-                        x=timestamps,
-                        y=inflation, 
-                        name='Inflasi QoQ'
-                    )
-                ], layout= go.Layout(
-                    title={
-                        'text': title,
-                        'xanchor': 'center',
-                        'x': 0.5
-                    },
-                    yaxis={
-                        'title':{
-                            'text':title
-                        }
-                    },
-                    showlegend=True
+        figure=go.Figure(
+            data = [
+                go.Line(
+                    x=timestamps, 
+                    y=data,
+                    name='Daya Beli QoQ',
+                    line={
+                        'color':'blue'
+                    }
+                ),
+                go.Line(
+                    x=timestamps.tail(2),
+                    y=prediction,
+                    name='Daya Beli QoQ Prediksi',
+                    line={
+                        'color':prediction_line_color
+                    }
+                ),
+                go.Line(
+                    x=timestamps,
+                    y=inflation, 
+                    name='Inflasi QoQ'
                 )
+            ], layout= go.Layout(
+                title={
+                    'text': title,
+                    'xanchor': 'center',
+                    'x': 0.5
+                },
+                yaxis={
+                    'title':{
+                        'text':title
+                    }
+                },
+                showlegend=True
             )
         )
+    )
+
+def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
+
+    pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
+    pred_year = int(timestamps.tail(1).values[0][:4])
+
+    if pred_quarter > 4:
+        pred_quarter -= 4
+        pred_year += 1
+
+    timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
+    timestamps = timestamps.reset_index(drop=True)
+
+    prediction = pd.Series(prediction)
+    data = pd.Series(data)
+
+    prediction = np.append(data.tail(1).values, prediction.tail(1).values[0])
+    prediction = pd.Series(prediction)
+
+    if prediction.tail(1).values[0] < data.tail(1).values[0]:
+        prediction_line_color = 'red'
+    else:
+        prediction_line_color = 'green'
+
+    return dcc.Graph(
+        figure=go.Figure(
+            data = [
+                go.Line(
+                    x=timestamps, 
+                    y=data,
+                    name='Daya Beli YoY',
+                    line={
+                        'color':'blue'
+                    }
+                ),
+                go.Line(
+                    x=timestamps.tail(2),
+                    y=prediction,
+                    name='Daya Beli YoY Prediksi',
+                    line={
+                        'color':prediction_line_color
+                    }
+                ),
+                go.Line(
+                    x=timestamps,
+                    y=inflation, 
+                    name='Inflasi YoY'
+                )
+            ], layout= go.Layout(
+                title={
+                    'text': title,
+                    'xanchor': 'center',
+                    'x': 0.5
+                },
+                yaxis={
+                    'title':{
+                        'text':title
+                    }
+                },
+                showlegend=True
+            )
+        )
+    )
