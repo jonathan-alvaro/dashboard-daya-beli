@@ -33,12 +33,12 @@ qoq_preds = qoq_model.predict(qoq_X)
 
 # Load YoY data
 yoy_X, yoy_y, yoy_inflation, yoy_timestamps = load_yoy_data(
-    os.path.join(data_dir, 'yoy_complete.csv')
+    os.path.join(data_dir, 'yoy_non_food.csv')
 )
 
 # # Forecast future data
-# yoy_X = yoy_scaler.transform(yoy_X)
-# yoy_preds = yoy_model.predict(yoy_X)
+yoy_X = yoy_scaler.transform(yoy_X)
+yoy_preds = yoy_model.predict(yoy_X)
 
 # Import CSS stylesheets
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -87,7 +87,7 @@ def refresh_content(selected_menu):
 
         graphs.append(html.Div(
             plot_prediction_graph_yoy(
-                yoy_timestamps, yoy_y, None, yoy_inflation, 'Daya Beli YoY'
+                yoy_timestamps, yoy_y, yoy_preds, yoy_inflation, 'Daya Beli YoY'
             ), style={
                 'width':'50%',
                 'display':'inline-block'

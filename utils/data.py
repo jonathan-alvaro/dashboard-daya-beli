@@ -24,10 +24,10 @@ def load_yoy_data(csv_path) -> (pd.DataFrame, pd.Series, pd.Series, pd.Series):
 
     timestamps = create_timestamp(df['Tahun'], df['Quarter'])
 
-    y = df['Daya Beli GDP']
+    y = df['Daya Beli Nasional']
     inflation = df['Inflation']
     X = df.drop(
-        ['Inflation', 'Daya Beli GDP', 'Tahun', 'Motorcycle Sales'],
+        ['Inflation', 'Daya Beli GDP', 'Tahun', 'Daya Beli Nasional'],
         axis=1
     ).diff().fillna(0)
 
