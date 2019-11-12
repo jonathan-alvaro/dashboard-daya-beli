@@ -83,11 +83,6 @@ def refresh_content(selected_menu):
                 'display':'inline-block'
             }
         ))
-
-        divs.append(html.Div(
-            html.Button('Refresh Data', id='refresh-button')
-        ))
-
         return divs
 
     elif selected_menu == 'index':
