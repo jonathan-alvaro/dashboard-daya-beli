@@ -65,10 +65,48 @@ def refresh_content(selected_menu):
     if selected_menu == 'forecast':
         divs = []
 
+        qoq_latest_pred = qoq_preds[-1]
+        qoq_latest_data = qoq_y.tail(1).values[0]
+        qoq_change = (qoq_latest_pred / qoq_latest_data - 1) * 100
+
+        if qoq_change >= 0:
+            qoq_text = f'Naik {round(qoq_change, 2)}%'
+            qoq_text_color = 'green'
+        else:
+            qoq_text = f'Turun {-round(qoq_change, 2)}%'
+            qoq_text_color = 'red'
+
+        yoy_latest_pred = yoy_preds[-1]
+        yoy_latest_data = yoy_y.tail(1).values[0]
+        yoy_change = (yoy_latest_pred / yoy_latest_data - 1) * 100
+
+        if yoy_change >= 0:
+            yoy_text = f'Naik {round(yoy_change, 2)}%'
+            yoy_text_color = 'green'
+        else:
+            yoy_text = f'Turun {-round(yoy_change, 2)}%'
+            yoy_text_color = 'red'
+    
         divs.append(html.Div(
-            plot_prediction_graph_qoq(
-                qoq_timestamps, qoq_y, qoq_preds, qoq_inflation, 'Daya Beli QoQ'
-            ),
+            [
+                plot_prediction_graph_qoq(
+                    qoq_timestamps, qoq_y, qoq_preds, qoq_inflation, 'Daya Beli QoQ'
+                ),
+                html.P(
+                    f'Prediksi Daya Beli QoQ {qoq_timestamps.tail(1).values[0]}: {round(qoq_preds[-1], 2)}',
+                    style={
+                        'text-align':'center'
+                    }
+                ),
+                html.P(
+                    qoq_text,
+                    style={
+                        'text-align':'center',
+                        'color':qoq_text_color
+                    }
+                )
+
+            ],
             style={
                 'width':'50%',
                 'display':'inline-block'
@@ -76,9 +114,25 @@ def refresh_content(selected_menu):
         ))
 
         divs.append(html.Div(
-            plot_prediction_graph_yoy(
-                yoy_timestamps, yoy_y, yoy_preds, yoy_inflation, 'Daya Beli YoY'
-            ), style={
+            [
+                plot_prediction_graph_yoy(
+                    yoy_timestamps, yoy_y, yoy_preds, yoy_inflation, 'Daya Beli YoY'
+                ),
+                html.P(
+                    f'Prediksi Daya Beli YoY {yoy_timestamps.tail(1).values[0]}: {round(yoy_preds[-1], 2)}',
+                    style={
+                        'text-align':'center'
+                    }
+                ),
+                html.P(
+                    yoy_text,
+                    style={
+                        'text-align':'center',
+                        'color':yoy_text_color
+                    }
+                )
+
+            ], style={
                 'width':'50%',
                 'display':'inline-block'
             }
