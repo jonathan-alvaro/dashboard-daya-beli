@@ -16,20 +16,6 @@ from utils.data import *
 model_dir = 'models'
 data_dir = 'data'
 
-# Load QoQ data
-qoq_X, qoq_y, qoq_inflation, qoq_timestamps = load_qoq_data(
-    os.path.join(data_dir, 'all_merged.csv')
-)
-
-# Load YoY data
-yoy_X, yoy_y, yoy_inflation, yoy_timestamps = load_yoy_data(
-    os.path.join(data_dir, 'yoy_non_food.csv')
-)
-
-# # Forecast future data
-qoq_preds = predict_qoq(model_dir, qoq_X)
-yoy_preds = predict_yoy(model_dir, yoy_X)
-
 # Import CSS stylesheets
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -62,6 +48,20 @@ app.layout = html.Div([
     [Input('menu-dropdown', 'value')]
 )
 def refresh_content(selected_menu):
+    # Load QoQ data
+    qoq_X, qoq_y, qoq_inflation, qoq_timestamps = load_qoq_data(
+        os.path.join(data_dir, 'all_merged.csv')
+    )
+
+    # Load YoY data
+    yoy_X, yoy_y, yoy_inflation, yoy_timestamps = load_yoy_data(
+        os.path.join(data_dir, 'yoy_non_food.csv')
+    )
+
+    # # Forecast future data
+    qoq_preds = predict_qoq(model_dir, qoq_X)
+    yoy_preds = predict_yoy(model_dir, yoy_X)
+
     if selected_menu == 'forecast':
         divs = []
 
