@@ -76,14 +76,16 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
                     x=timestamps, 
                     y=data,
                     name='Daya Beli QoQ',
+                    mode='lines+markers',
                     line={
-                        'color':'blue'
+                        'color':'#ccdbdc'
                     }
                 ),
                 go.Line(
                     x=timestamps.tail(2),
                     y=prediction,
                     name='Daya Beli QoQ Prediksi',
+                    mode='lines+markers',
                     line={
                         'color':prediction_line_color
                     }
@@ -91,7 +93,8 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
                 go.Line(
                     x=timestamps,
                     y=inflation, 
-                    name='Inflasi QoQ'
+                    name='Inflasi QoQ',
+                    mode='lines+markers'
                 )
             ], layout= go.Layout(
                 title={
@@ -99,14 +102,26 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
                     'xanchor': 'center',
                     'x': 0.5
                 },
+                xaxis={
+                    'showgrid':False
+                },
                 yaxis={
                     'title':{
                         'text':title
-                    }
+                    },
+                    'showgrid':False
                 },
+                font={
+                    'color': '#ccdbdc'
+                },
+                paper_bgcolor='#4e8098',
+                plot_bgcolor='#4e8098',
                 showlegend=True
             )
-        )
+        ),
+        config={
+            'displayModeBar': False
+        }
     )
 
 def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
@@ -139,14 +154,16 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
                     x=timestamps, 
                     y=data,
                     name='Daya Beli YoY',
+                    mode='lines+markers',
                     line={
-                        'color':'blue'
+                        'color':'#ccdbdc'
                     }
                 ),
                 go.Line(
                     x=timestamps.tail(2),
                     y=prediction,
                     name='Daya Beli YoY Prediksi',
+                    mode='lines+markers',
                     line={
                         'color':prediction_line_color
                     }
@@ -154,7 +171,8 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
                 go.Line(
                     x=timestamps,
                     y=inflation, 
-                    name='Inflasi YoY'
+                    name='Inflasi YoY',
+                    mode='lines+markers'
                 )
             ], layout= go.Layout(
                 title={
@@ -162,12 +180,24 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
                     'xanchor': 'center',
                     'x': 0.5
                 },
+                xaxis={
+                    'showgrid':False
+                },
                 yaxis={
                     'title':{
                         'text':title
-                    }
+                    },
+                    'showgrid':False
                 },
+                font={
+                    'color': '#ccdbdc'
+                },
+                plot_bgcolor='#4e8098',
+                paper_bgcolor='#4e8098',
                 showlegend=True
             )
-        )
+        ),
+        config={
+            'displayModeBar': False
+        }
     )

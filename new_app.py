@@ -21,6 +21,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 # Expose flask serve for deployment
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app.css.append_css({'external_url': 'reset.css'})
 server = app.server
 
 # Determine HTML layout
