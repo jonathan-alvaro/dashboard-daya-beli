@@ -21,18 +21,15 @@ function update_map() {
         output.innerHTML = timecode;
 
         var year_data = data[timecode];
-        update_control(year_data);
+        update_national_column(year_data);
 
         geojson.eachLayer((layer) => {
             var id = layer.feature.properties.ID;
             layer.feature.properties.index = year_data[id]['index'];
-            console.log(layer.feature.properties.index);
         });
 
         geojson.setStyle((feature) => {
-            var info_div = info._div
-            var p = (info_div.children)[1]
-            var national_index = parseFloat((p.children)[0].innerHTML)
+            var national_index = get_national_index_value();
             return {
                 fillColor: getColor(feature.properties.index),
                 weight: 2,
@@ -46,5 +43,5 @@ function update_map() {
     });
 };
 
-slider.oninput = update_map();
+slider.oninput = update_map;
 update_map();

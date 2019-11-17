@@ -1,15 +1,57 @@
 html {
 	height: 100%;
+	font-family: 'Poppins', sans-serif;
 }
 
 body {
+	background-color: #4e8098;
     height: 100%;
-    margin: 0;
+	margin: 0;
+	color: #ccdbdc;
+}
+
+.leaflet-container {
+	background-color: #4e8098;
 }
 
 #map {
 	height: 80%;
+	width: 75%;
+	margin: auto;
+	float: left;
+}
+
+#feature-table {
+	height:80%;
 	width: auto;
+	margin-left: 75%;
+	display: flex;
+	justify-content: center;
+}
+
+table {
+	border-collapse: collapse;
+	align-self: center;
+}
+table td, table th {
+	border: 3px solid #ccdbdc;
+}
+table tr:first-child td:first-child {
+  border-top: 0;
+}
+table tr:last-child td {
+  border-bottom: 0;
+}
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+}
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
+}
+table tr:first-child td{
+	border-top: 0;
 }
 
 .info {

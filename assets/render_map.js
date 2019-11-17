@@ -1,31 +1,27 @@
 var geojson;
-var info = L.control();
 var map = L.map('map', {
-    minZoom: 4.7,
-    maxZoom: 4.7,
-    zoom: 4.7
+    minZoom: 4,
+    maxZoom: 4,
+    zoom: 4
 });
+
+function get_national_index_value() {
+    var table = document.getElementById("comparison-table");
+    var national_index = table.rows[11].cells[2].innerHTML;
+
+    return national_index;
+}
 
 // Function for color per province
 function getColor(d) {
 
-    if (typeof(reference) === 'undefined') {
-        if (typeof(info._div) !== 'undefined') {
-            var info_div = info._div;
-            var p = (info_div.children)[1];
-            var national_index = parseFloat((p.children)[0].innerHTML);
-            reference = national_index;
-        }
-        else {
-            reference=0;
-        }
-    }
+    var national_index = get_national_index_value();
 
     var retval = '#fec44f';
 
-    if (d < 2.25 || d > 4.25) {
+    if (d < national_index) {
         retval = '#f03b20';
-    } else if (d > 2.25 && d < 4.25) {
+    } else if (d > national_index) {
         retval = '#31a354';
     }
     return retval
@@ -67,19 +63,7 @@ function highlightFeature(e) {
         var data = JSON.parse(food_province_json);
         var time_label = document.getElementById("sliderValue").innerHTML;
         var province_data = data[time_label][layer.feature.properties.ID];
-        var commodities = Object.keys(province_data);
-
-        var index = layer.feature.properties.index;
-        if (typeof index !== 'undefined') {
-            index = index.toFixed(2);
-        }
-
-        var popup_string = "Index: " + String(index) + "<br />";
-
-        for (idx in commodities) {
-            popup_string = popup_string + commodities[idx] + ": " + String(province_data[commodities[idx]].toFixed(2)) + "<br />";
-        }
-        layer.bindPopup(popup_string).openPopup();
+        update_province_column(province_data, layer.feature.properties.Propinsi);
     });
 }
 
@@ -143,5 +127,66 @@ function update_control(new_year_data){
     info._div.innerHTML = info_string;
 }
 
+function render_table() {
+    var table_div = document.getElementById("feature-table");
+
+    var table = document.createElement('table');
+    table.setAttribute("id", "comparison-table");
+
+    for (var i = 0; i < 12; i++) {
+        var tr = table.insertRow();
+
+        for (var j = 0; j < 3; j++) {
+            var td = tr.insertCell();
+
+            if (i == 0) {
+                if (j == 1) {
+                    td.appendChild(document.createTextNode('Provinsi'));
+                } else if (j == 2) {
+                    td.appendChild(document.createTextNode('Nasional'));
+                }
+            }
+        }
+    }
+
+    var data = get_food_data();
+    data.then((res) => {
+        var api_data = JSON.parse(res);
+        var time_data = api_data[Object.keys(api_data)[0]];
+        var location_data = time_data[Object.keys(time_data)[0]];
+        var commodities = Object.keys(location_data);
+
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            var header_cell = row.cells[0];
+            header_cell.innerHTML = commodities[i-1];
+        }
+    });
+
+    table_div.appendChild(table);
+}
+
+function update_national_column(year_data) {
+    var table = document.getElementById("comparison-table");
+    var national_data = year_data["-1"];
+
+    for (var i = 1, row; row = table.rows[i]; i++) {
+        var row_header = row.cells[0];
+        var national_val = national_data[row_header.innerHTML];
+        row.cells[2].innerHTML = national_val.toFixed(2);
+    }
+}
+
+function update_province_column(province_data, province_name) {
+    var table = document.getElementById("comparison-table");
+
+    table.rows[0].cells[0].innerHTML = province_name
+
+    for (var i = 1, row; row = table.rows[i]; i++) {
+        var row_header = row.cells[0];
+        var province_val = province_data[row_header.innerHTML];
+        row.cells[1].innerHTML = province_val.toFixed(2);
+    }
+}
+
+render_table();
 render_map(map);
-render_control(map, info);
