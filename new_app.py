@@ -90,7 +90,7 @@ def refresh_content(selected_menu):
         yoy_latest_timestamp = yoy_timestamps.tail(1).values[0]
         yoy_change = yoy_latest_pred - yoy_latest_data
 
-        yoy_new_year = int(yoy_latest_timestamp[-1])
+        yoy_new_year = int(yoy_latest_timestamp[:4])
         yoy_new_quarter = int(yoy_latest_timestamp[-1]) + 1
         if yoy_new_quarter > 4:
             yoy_new_year += 1
