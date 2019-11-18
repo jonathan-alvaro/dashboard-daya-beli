@@ -156,19 +156,6 @@ def refresh_content(selected_menu):
             [
                 plot_prediction_graph_qoq(
                     qoq_timestamps, qoq_y, qoq_preds, qoq_inflation, 'Daya Beli QoQ'
-                ),
-                html.P(
-                    f'Prediksi Daya Beli QoQ {qoq_timestamps.tail(1).values[0]}: {round(qoq_preds[-1], 2)}',
-                    style={
-                        'text-align':'center'
-                    }
-                ),
-                html.P(
-                    qoq_text,
-                    style={
-                        'text-align':'center',
-                        'color':qoq_text_color
-                    }
                 )
 
             ],
@@ -245,19 +232,6 @@ def refresh_content(selected_menu):
             [
                 plot_prediction_graph_yoy(
                     yoy_timestamps, yoy_y, yoy_preds, yoy_inflation, 'Daya Beli YoY'
-                ),
-                html.P(
-                    f'Prediksi Daya Beli YoY {yoy_timestamps.tail(1).values[0]}: {round(yoy_preds[-1], 2)}',
-                    style={
-                        'text-align':'center'
-                    }
-                ),
-                html.P(
-                    yoy_text,
-                    style={
-                        'text-align':'center',
-                        'color':yoy_text_color
-                    }
                 )
 
             ], style={
