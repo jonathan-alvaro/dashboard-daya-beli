@@ -148,7 +148,7 @@ def refresh_content(selected_menu):
                 'display': 'flex',
                 'align-content':'center',
                 'flex-direction':'row',
-                'justify-content':'right'
+                'justify-content':'flex-end'
             }
         ))
 
@@ -224,7 +224,7 @@ def refresh_content(selected_menu):
                 'display': 'flex',
                 'align-content':'center',
                 'flex-direction':'row',
-                'justify-content':'right'
+                'justify-content':'flex-end'
             }
         ))
 
