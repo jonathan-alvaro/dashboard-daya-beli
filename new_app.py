@@ -68,7 +68,7 @@ def refresh_content(selected_menu):
 
         qoq_latest_pred = qoq_preds[-1]
         qoq_latest_data = qoq_y.tail(1).values[0]
-        qoq_change = (qoq_latest_pred / qoq_latest_data - 1) * 100
+        qoq_change = qoq_latest_pred - qoq_latest_data
 
         if qoq_change >= 0:
             qoq_text = f'Naik {round(qoq_change, 2)}%'
@@ -79,7 +79,7 @@ def refresh_content(selected_menu):
 
         yoy_latest_pred = yoy_preds[-1]
         yoy_latest_data = yoy_y.tail(1).values[0]
-        yoy_change = (yoy_latest_pred / yoy_latest_data - 1) * 100
+        yoy_change = yoy_latest_pred - yoy_latest_data
 
         if yoy_change >= 0:
             yoy_text = f'Naik {round(yoy_change, 2)}%'
@@ -93,7 +93,7 @@ def refresh_content(selected_menu):
                 html.Div(
                     [
                         html.P(
-                            "Prediksi Daya Beli QoQ",
+                            f"Prediksi Daya Beli QoQ {qoq_timestamps.tail(1).values[0]}",
                             style={
                                 'align-self':'center',
                                 'font-size':'1em'
@@ -169,7 +169,7 @@ def refresh_content(selected_menu):
                 html.Div(
                     [
                         html.P(
-                            "Prediksi Daya Beli YoY",
+                            f"Prediksi Daya Beli YoY {yoy_timestamps.tail(1).values[0]}",
                             style={
                                 'align-self':'center',
                                 'font-size':'1em'

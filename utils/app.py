@@ -76,6 +76,7 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
         pred_year += 1
 
     timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
+    timestamps = timestamps.apply(lambda x : x[2:])
     timestamps = timestamps.reset_index(drop=True)
 
     prediction = pd.Series(prediction)
@@ -154,6 +155,7 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
         pred_year += 1
 
     timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
+    timestamps = timestamps.apply(lambda x : x[2:])
     timestamps = timestamps.reset_index(drop=True)
 
     prediction = pd.Series(prediction)
