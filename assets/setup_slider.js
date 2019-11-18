@@ -22,6 +22,7 @@ function update_map() {
 
         var year_data = data[timecode];
         update_national_column(year_data);
+        update_national_index();
 
         geojson.eachLayer((layer) => {
             var id = layer.feature.properties.ID;

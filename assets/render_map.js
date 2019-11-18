@@ -1,8 +1,9 @@
 var geojson;
 var map = L.map('map', {
-    minZoom: 4,
-    maxZoom: 4,
-    zoom: 4
+    minZoom: 4.3,
+    maxZoom: 4.3,
+    zoom: 4.3,
+    dragging: false
 });
 
 function get_national_index_value() {
@@ -90,43 +91,6 @@ function render_map(map){
     return map
 };
 
-function render_control(map, info){
-
-    info.onAdd = function(map) {
-        this._div = L.DomUtil.create('div', 'info');
-        this.update();
-        return this._div;
-    }
-
-    info.update = function (new_index) {
-        this._div.innerHTML = '<h4>National Info</h4>' + (
-            '<p>Indeks 10 komoditas: <span>' + String(new_index) + '</span></p>'
-        );
-    }
-
-    info.addTo(map);
-
-    return info
-}
-
-function update_control(new_year_data){
-    national_data = new_year_data['-1'];
-
-    index_value = national_data['index'];
-    info_string = '<h4>National Info</h4>' + (
-        "<p>Indeks: <span>" + String(index_value.toFixed(2)) + "</span></p>"
-    );
-
-    for (variable in national_data) {
-        if (variable == 'index') {
-            continue;
-        }
-        info_string = info_string + `<p>${variable}: ${national_data[variable].toFixed(2)}</p>`;
-    }
-
-    info._div.innerHTML = info_string;
-}
-
 function render_table() {
     var table_div = document.getElementById("feature-table");
 
@@ -186,6 +150,13 @@ function update_province_column(province_data, province_name) {
         var province_val = province_data[row_header.innerHTML];
         row.cells[1].innerHTML = province_val.toFixed(2);
     }
+}
+
+function update_national_index() {
+    var national_index = get_national_index_value();
+    var index_text_div = document.getElementById("index-value");
+
+    index_text_div.innerHTML = national_index;
 }
 
 render_table();
