@@ -154,9 +154,9 @@ function update_province_column(province_data, province_name) {
 
 function update_national_index() {
     var national_index = get_national_index_value();
-    var index_text_div = document.getElementById("index-div");
+    var index_text_div = document.getElementById("index-value");
 
-    index_text_div.innerHTML = national_index.toFixed(2);
+    index_text_div.innerHTML = national_index;
 }
 
 render_table();

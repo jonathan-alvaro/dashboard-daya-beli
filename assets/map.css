@@ -27,12 +27,23 @@ body {
 	margin-left: 75%;
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
 }
 
 #index-div {
 	height: 30%;
 	width: 100%;
 	justify-content: center;
+	display: flex;
+	flex-direction: column;
+}
+#index-div p {
+	align-self: center;
+}
+
+#index-value {
+	font-size: 5em;
+	margin: 0;
 }
 
 table {
