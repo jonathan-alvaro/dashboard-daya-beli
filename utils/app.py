@@ -15,13 +15,21 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         x=timestamps, 
                         y=predictors[col],
                         name=col,
-                        yaxis='y2'
+                        yaxis='y2',
+                        mode='lines+markers',
+                        line={
+                            'color':'#ccdbdc'
+                        }
                     ),
                     go.Line(
                         x=timestamps,
                         y=targets,
                         name='Daya Beli',
-                        yaxis='y'
+                        yaxis='y',
+                        mode='lines+markers',
+                        line={
+                            'color':'#ccdbdc'
+                        }
                     )
                 ], layout= go.Layout(
                     title={
@@ -36,7 +44,11 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         'title':f'Change {col} (%)',
                         'side':'right',
                         'overlaying':'y'
+                    },font={
+                        'color': '#ccdbdc'
                     },
+                    paper_bgcolor='#4e8098',
+                    plot_bgcolor='#4e8098',
                     showlegend=True
                 )
             )
