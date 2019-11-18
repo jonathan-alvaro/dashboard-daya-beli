@@ -90,6 +90,70 @@ def refresh_content(selected_menu):
     
         divs.append(html.Div(
             [
+                html.Div(
+                    [
+                        html.P(
+                            "Prediksi Daya Beli QoQ",
+                            style={
+                                'align-self':'center',
+                                'font-size':'1em'
+                            }
+                        ),
+                        html.P(
+                            str(round(qoq_preds[-1], 2)) + "%",
+                            style={
+                                'align-self':'center',
+                                'font-size':'5em',
+                                'margin':0
+                            }
+                        )
+                    ],
+                    style={
+                        'display':'flex',
+                        'align-content':'center',
+                        'flex-direction':'column',
+                        'align-self': 'right',
+                        'margin-right':'2.5%'
+                    }
+                ),
+                html.Div(
+                    [
+                        html.P(
+                            "Perubahan Daya Beli QoQ",
+                            style={
+                                'align-self':'center',
+                                'font-size':'1em'
+                            }
+                        ),
+                        html.P(
+                            str(round(qoq_change, 2)) + "%",
+                            style={
+                                'align-self':'center',
+                                'font-size':'5em',
+                                'margin':0
+                            }
+                        )
+                    ],
+                    style={
+                        'display':'flex',
+                        'align-content':'center',
+                        'flex-direction':'column',
+                        'color': qoq_text_color,
+                        'align-self': 'right',
+                        'margin-right':'1%'
+                    }
+                )
+            ],
+            style={
+                'display': 'flex',
+                'align-content':'center',
+                'flex-direction':'row',
+                'justify-content':'right'
+            }
+        ))
+
+        divs.append(html.Div(
+            [
                 plot_prediction_graph_qoq(
                     qoq_timestamps, qoq_y, qoq_preds, qoq_inflation, 'Daya Beli QoQ'
                 ),
@@ -109,8 +173,71 @@ def refresh_content(selected_menu):
 
             ],
             style={
-                'width':'50%',
-                'display':'inline-block'
+                'width':'100%'
+            }
+        ))
+
+        divs.append(html.Div(
+            [
+                html.Div(
+                    [
+                        html.P(
+                            "Prediksi Daya Beli YoY",
+                            style={
+                                'align-self':'center',
+                                'font-size':'1em'
+                            }
+                        ),
+                        html.P(
+                            str(round(yoy_preds[-1], 2)) + "%",
+                            style={
+                                'align-self':'center',
+                                'font-size':'5em',
+                                'margin':0
+                            }
+                        )
+                    ],
+                    style={
+                        'display':'flex',
+                        'align-content':'center',
+                        'flex-direction':'column',
+                        'align-self': 'right',
+                        'margin-right':'2.5%'
+                    }
+                ),
+                html.Div(
+                    [
+                        html.P(
+                            "Perubahan Daya Beli YoY",
+                            style={
+                                'align-self':'center',
+                                'font-size':'1em'
+                            }
+                        ),
+                        html.P(
+                            str(round(yoy_change, 2)) + "%",
+                            style={
+                                'align-self':'center',
+                                'font-size':'5em',
+                                'margin':0
+                            }
+                        )
+                    ],
+                    style={
+                        'display':'flex',
+                        'align-content':'center',
+                        'flex-direction':'column',
+                        'color': yoy_text_color,
+                        'align-self': 'right',
+                        'margin-right':'1%'
+                    }
+                )
+            ],
+            style={
+                'display': 'flex',
+                'align-content':'center',
+                'flex-direction':'row',
+                'justify-content':'right'
             }
         ))
 
@@ -134,8 +261,7 @@ def refresh_content(selected_menu):
                 )
 
             ], style={
-                'width':'50%',
-                'display':'inline-block'
+                'width':'100%'
             }
         ))
         return divs
