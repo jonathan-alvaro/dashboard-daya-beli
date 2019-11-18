@@ -71,7 +71,7 @@ def refresh_content(selected_menu):
         qoq_latest_timestamp = qoq_timestamps.tail(1).values[0]
         qoq_change = qoq_latest_pred - qoq_latest_data
 
-        qoq_new_year = int(qoq_latest_timestamp[-1])
+        qoq_new_year = int(qoq_latest_timestamp[:4])
         qoq_new_quarter = int(qoq_latest_timestamp[-1]) + 1
         if qoq_new_quarter > 4:
             qoq_new_year += 1
