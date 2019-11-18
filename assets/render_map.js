@@ -188,5 +188,12 @@ function update_province_column(province_data, province_name) {
     }
 }
 
+function update_national_index() {
+    var national_index = get_national_index_value();
+    var index_text_div = document.getElementById("index-div");
+
+    index_text_div.innerHTML = national_index.toFixed(2);
+}
+
 render_table();
 render_map(map);

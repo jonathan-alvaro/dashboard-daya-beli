@@ -29,6 +29,12 @@ body {
 	justify-content: center;
 }
 
+#index-div {
+	height: 30%;
+	width: 100%;
+	justify-content: center;
+}
+
 table {
 	border-collapse: collapse;
 	align-self: center;
