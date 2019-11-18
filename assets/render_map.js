@@ -1,8 +1,9 @@
 var geojson;
 var map = L.map('map', {
-    minZoom: 4,
-    maxZoom: 4,
-    zoom: 4
+    minZoom: 4.3,
+    maxZoom: 4.3,
+    zoom: 4.3,
+    dragging: false
 });
 
 function get_national_index_value() {
