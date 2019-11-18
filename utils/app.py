@@ -18,7 +18,11 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         yaxis='y2',
                         mode='lines+markers',
                         line={
-                            'color':'#ccdbdc'
+                            'color':'#f2d4b7',
+                            'width': 3
+                        },
+                        marker={
+                            'size':10
                         }
                     ),
                     go.Line(
@@ -28,7 +32,11 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         yaxis='y',
                         mode='lines+markers',
                         line={
-                            'color':'#ccdbdc'
+                            'color':'#ccdbdc',
+                            'width': 3
+                        },
+                        marker={
+                            'size':10
                         }
                     )
                 ], layout= go.Layout(
@@ -51,7 +59,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                     plot_bgcolor='#4e8098',
                     showlegend=True
                 )
-            )
+            ),config={'displayModeBar': False}
         )
         graphs.append(graph)
     
