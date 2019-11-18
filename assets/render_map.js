@@ -90,43 +90,6 @@ function render_map(map){
     return map
 };
 
-function render_control(map, info){
-
-    info.onAdd = function(map) {
-        this._div = L.DomUtil.create('div', 'info');
-        this.update();
-        return this._div;
-    }
-
-    info.update = function (new_index) {
-        this._div.innerHTML = '<h4>National Info</h4>' + (
-            '<p>Indeks 10 komoditas: <span>' + String(new_index) + '</span></p>'
-        );
-    }
-
-    info.addTo(map);
-
-    return info
-}
-
-function update_control(new_year_data){
-    national_data = new_year_data['-1'];
-
-    index_value = national_data['index'];
-    info_string = '<h4>National Info</h4>' + (
-        "<p>Indeks: <span>" + String(index_value.toFixed(2)) + "</span></p>"
-    );
-
-    for (variable in national_data) {
-        if (variable == 'index') {
-            continue;
-        }
-        info_string = info_string + `<p>${variable}: ${national_data[variable].toFixed(2)}</p>`;
-    }
-
-    info._div.innerHTML = info_string;
-}
-
 function render_table() {
     var table_div = document.getElementById("feature-table");
 
