@@ -20,9 +20,9 @@ function getColor(d) {
 
     var retval = '#fec44f';
 
-    if (d < national_index) {
+    if (d > national_index) {
         retval = '#f03b20';
-    } else if (d > national_index) {
+    } else if (d < national_index) {
         retval = '#31a354';
     }
     return retval
