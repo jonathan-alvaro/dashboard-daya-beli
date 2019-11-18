@@ -68,7 +68,15 @@ def refresh_content(selected_menu):
 
         qoq_latest_pred = qoq_preds[-1]
         qoq_latest_data = qoq_y.tail(1).values[0]
+        qoq_latest_timestamp = qoq_timestamps.tail(1).values[0]
         qoq_change = qoq_latest_pred - qoq_latest_data
+
+        qoq_new_year = int(qoq_latest_timestamp[-1])
+        qoq_new_quarter = int(qoq_latest_timestamp[-1]) + 1
+        if qoq_new_quarter > 4:
+            qoq_new_year += 1
+            qoq_new_quarter %= 4
+        qoq_new_timestamp = f'{qoq_new_year}-Q{qoq_new_quarter}'
 
         if qoq_change >= 0:
             qoq_text = f'Naik {round(qoq_change, 2)}%'
@@ -79,7 +87,15 @@ def refresh_content(selected_menu):
 
         yoy_latest_pred = yoy_preds[-1]
         yoy_latest_data = yoy_y.tail(1).values[0]
+        yoy_latest_timestamp = yoy_timestamps.tail(1).values[0]
         yoy_change = yoy_latest_pred - yoy_latest_data
+
+        yoy_new_year = int(yoy_latest_timestamp[-1])
+        yoy_new_quarter = int(yoy_latest_timestamp[-1]) + 1
+        if yoy_new_quarter > 4:
+            yoy_new_year += 1
+            yoy_new_quarter %= 4
+        yoy_new_timestamp = f'{yoy_new_year}-Q{yoy_new_quarter}'
 
         if yoy_change >= 0:
             yoy_text = f'Naik {round(yoy_change, 2)}%'
@@ -93,7 +109,7 @@ def refresh_content(selected_menu):
                 html.Div(
                     [
                         html.P(
-                            f"Prediksi Daya Beli QoQ {qoq_timestamps.tail(1).values[0]}",
+                            f"Prediksi Daya Beli QoQ {qoq_new_timestamp}",
                             style={
                                 'align-self':'center',
                                 'font-size':'1em'
@@ -169,7 +185,7 @@ def refresh_content(selected_menu):
                 html.Div(
                     [
                         html.P(
-                            f"Prediksi Daya Beli YoY {yoy_timestamps.tail(1).values[0]}",
+                            f"Prediksi Daya Beli YoY {yoy_new_timestamp}",
                             style={
                                 'align-self':'center',
                                 'font-size':'1em'
