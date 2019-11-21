@@ -45,13 +45,18 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         'xanchor': 'center',
                         'x': 0.5
                     },
+                    xaxis={
+                        'showgrid':False
+                    },
                     yaxis={
-                        'title':'Change Daya Beli (%)'
+                        'title':'Change Daya Beli (%)',
+                        'showgrid':False
                     },
                     yaxis2={
                         'title':f'Change {col} (%)',
                         'side':'right',
-                        'overlaying':'y'
+                        'overlaying':'y',
+                        'showgrid':False
                     },font={
                         'color': '#ccdbdc'
                     },
