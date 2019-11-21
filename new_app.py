@@ -51,10 +51,10 @@ app.layout = html.Div([
 def refresh_content(selected_menu):
 
     # Load YoY data
-    yoy_X, yoy_y, yoy_inflation, yoy_timestamps = load_yoy_data(
+    yoy_X, yoy_y, yoy_inflation, yoy_national_income, yoy_timestamps = load_yoy_data(
         os.path.join(data_dir, 'yoy_non_food.csv')
     )
-
+    
     # Forecast future data
     yoy_preds = predict_yoy(model_dir, yoy_X)
 
@@ -87,25 +87,25 @@ def refresh_content(selected_menu):
                         html.P(
                             f"Prediksi Daya Beli YoY {yoy_new_timestamp}",
                             style={
-                                'align-self':'center',
-                                'font-size':'1em'
+                                'alignSelf':'center',
+                                'fontSize':'1em'
                             }
                         ),
                         html.P(
                             str(round(yoy_preds[-1], 2)) + "%",
                             style={
-                                'align-self':'center',
-                                'font-size':'5em',
+                                'alignSelf':'center',
+                                'fontSize':'5em',
                                 'margin':0
                             }
                         )
                     ],
                     style={
                         'display':'flex',
-                        'align-content':'center',
-                        'flex-direction':'column',
-                        'align-self': 'right',
-                        'margin-right':'2.5%'
+                        'alignContent':'center',
+                        'flexDirection':'column',
+                        'alignSelf': 'right',
+                        'marginRight':'2.5%'
                     }
                 ),
                 html.Div(
@@ -113,41 +113,42 @@ def refresh_content(selected_menu):
                         html.P(
                             "Perubahan Daya Beli YoY",
                             style={
-                                'align-self':'center',
-                                'font-size':'1em'
+                                'alignSelf':'center',
+                                'fontSize':'1em'
                             }
                         ),
                         html.P(
                             str(round(yoy_change, 2)) + "%",
                             style={
-                                'align-self':'center',
-                                'font-size':'5em',
+                                'alignSelf':'center',
+                                'fontSize':'5em',
                                 'margin':0
                             }
                         )
                     ],
                     style={
                         'display':'flex',
-                        'align-content':'center',
-                        'flex-direction':'column',
+                        'alignContent':'center',
+                        'flexDirection':'column',
                         'color': yoy_text_color,
-                        'align-self': 'right',
-                        'margin-right':'1%'
+                        'alignSelf': 'right',
+                        'marginRight':'1%'
                     }
                 )
             ],
             style={
                 'display': 'flex',
-                'align-content':'center',
-                'flex-direction':'row',
-                'justify-content':'flex-end'
+                'alignContent':'center',
+                'flexDirection':'row',
+                'justifyContent':'flex-end'
             }
         ))
 
         divs.append(html.Div(
             [
                 plot_prediction_graph_yoy(
-                    yoy_timestamps, yoy_y, yoy_preds, yoy_inflation, 'Daya Beli YoY'
+                    yoy_timestamps, yoy_y, yoy_preds,
+                    yoy_inflation, yoy_national_income, 'Daya Beli YoY'
                 )
 
             ], style={

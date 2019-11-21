@@ -150,7 +150,7 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
         }
     )
 
-def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
+def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, national_income, title):
 
     pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
     pred_year = int(timestamps.tail(1).values[0][:4])
@@ -158,6 +158,8 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
     if pred_quarter > 4:
         pred_quarter -= 4
         pred_year += 1
+
+    print(type(national_income))
 
     timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
     timestamps = timestamps.apply(lambda x : x[2:])
@@ -178,7 +180,7 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
         figure=go.Figure(
             data = [
                 go.Line(
-                    x=timestamps, 
+                    x=timestamps,
                     y=data,
                     name='Daya Beli YoY',
                     mode='lines+markers',
@@ -199,6 +201,12 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, title):
                     x=timestamps,
                     y=inflation, 
                     name='Inflasi YoY',
+                    mode='lines+markers'
+                ),
+                go.Line(
+                    x=timestamps,
+                    y=national_income,
+                    name='Pendapatan Nasional YoY',
                     mode='lines+markers'
                 )
             ], layout= go.Layout(
