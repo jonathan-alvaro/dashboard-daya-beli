@@ -150,7 +150,7 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
         }
     )
 
-def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, national_income, title):
+def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income, title):
 
     pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
     pred_year = int(timestamps.tail(1).values[0][:4])
@@ -197,8 +197,8 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, national_
                 ),
                 go.Line(
                     x=timestamps,
-                    y=inflation, 
-                    name='Inflasi YoY',
+                    y=ihk, 
+                    name='IHK YoY',
                     mode='lines+markers'
                 ),
                 go.Line(

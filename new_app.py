@@ -51,7 +51,7 @@ app.layout = html.Div([
 def refresh_content(selected_menu):
 
     # Load YoY data
-    yoy_X, yoy_y, yoy_inflation, yoy_national_income, yoy_timestamps = load_yoy_data(
+    yoy_X, yoy_y, yoy_ihk, yoy_national_income, yoy_timestamps = load_yoy_data(
         os.path.join(data_dir, 'yoy_non_food.csv')
     )
     
@@ -148,7 +148,7 @@ def refresh_content(selected_menu):
             [
                 plot_prediction_graph_yoy(
                     yoy_timestamps, yoy_y, yoy_preds,
-                    yoy_inflation, yoy_national_income, 'Daya Beli YoY'
+                    yoy_ihk, yoy_national_income, 'Daya Beli YoY'
                 )
 
             ], style={

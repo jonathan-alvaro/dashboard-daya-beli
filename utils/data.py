@@ -29,11 +29,13 @@ def load_yoy_data(csv_path, num_quarters=12) -> (
 
     national_income = pd.read_csv('data/national_income.csv')
     y = df['Daya Beli Nasional']
-    inflation = df['Inflation']
+    ihk = pd.read_csv('data/ihk.csv')
     X = pd.merge(df, national_income, on=['Tahun', 'Quarter'])
+    X = pd.merge(X, ihk, on=['Tahun', 'Quarter'])
     national_income = X['National Income']
+    ihk = X['IHK']
     X = X.drop(
-        ['Inflation', 'Daya Beli GDP', 'Tahun', 'Daya Beli Nasional', 'National Income'],
+        ['Inflation', 'Daya Beli GDP', 'Tahun', 'Daya Beli Nasional', 'National Income', 'IHK'],
         axis=1
     ).diff()
 
@@ -41,7 +43,7 @@ def load_yoy_data(csv_path, num_quarters=12) -> (
 
     X = X.fillna(0)
 
-    return (X, y, inflation, national_income, timestamps)
+    return (X, y, ihk, national_income, timestamps)
 
 def create_timestamp(years: pd.Series, quarters: pd.Series) -> pd.Series:
     timestamps = years.apply(str) + '-Q' + quarters.apply(str)
