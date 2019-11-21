@@ -159,8 +159,6 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, national_
         pred_quarter -= 4
         pred_year += 1
 
-    print(type(national_income))
-
     timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
     timestamps = timestamps.apply(lambda x : x[2:])
     timestamps = timestamps.reset_index(drop=True)
@@ -216,12 +214,13 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, inflation, national_
                     'x': 0.5
                 },
                 xaxis={
-                    'showgrid':False
+                    'showgrid':False,
                 },
                 yaxis={
                     'title':{
                         'text':title
                     },
+                    'zerolinecolor':'black',
                     'showgrid':False
                 },
                 font={
