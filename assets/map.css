@@ -4,14 +4,14 @@ html {
 }
 
 body {
-	background-color: #4e8098;
+	background-color: #284e66;
     height: 100%;
 	margin: 0;
 	color: #ccdbdc;
 }
 
 .leaflet-container {
-	background-color: #4e8098;
+	background-color: #284e66;
 }
 
 #map {
