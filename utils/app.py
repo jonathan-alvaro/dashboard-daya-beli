@@ -162,6 +162,12 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                     'showline':True,
                     'linecolor': '#A9A9A9'
                 },
+                legend={
+                    'xanchor':'right',
+                    'yanchor':'top',
+                    'x':0,
+                    'y':0
+                },
                 font={
                     'color': '#ccdbdc'
                 },

@@ -79,7 +79,19 @@ def refresh_content(selected_menu):
         else:
             yoy_text = f'Turun {-round(yoy_change, 2)}%'
             yoy_text_color = 'red'
-    
+
+        divs.append(html.Div(
+            [
+                plot_prediction_graph_yoy(
+                    yoy_timestamps, yoy_y, yoy_preds,
+                    yoy_ihk, yoy_national_income, 'Daya Beli YoY'
+                )
+
+            ], style={
+                'width':'100%'
+            }
+        ))
+
         divs.append(html.Div(
             [
                 html.Div(
@@ -139,23 +151,19 @@ def refresh_content(selected_menu):
             style={
                 'display': 'flex',
                 'alignContent':'center',
-                'flexDirection':'row',
+                'flexDirection':'column',
                 'justifyContent':'flex-end'
             }
         ))
-
-        divs.append(html.Div(
-            [
-                plot_prediction_graph_yoy(
-                    yoy_timestamps, yoy_y, yoy_preds,
-                    yoy_ihk, yoy_national_income, 'Daya Beli YoY'
-                )
-
-            ], style={
-                'width':'100%'
+        
+        return html.Div(
+            divs,
+            style={
+                'width':'100%',
+                'display':'flex',
+                'flexDirection':'row'
             }
-        ))
-        return divs
+        )
 
     elif selected_menu == 'index':
         return html.Iframe(
