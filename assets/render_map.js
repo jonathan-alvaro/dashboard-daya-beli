@@ -161,3 +161,25 @@ function update_national_index() {
 
 render_table();
 render_map(map);
+
+var legend = L.control({position: 'bottomleft'});
+legend.onAdd = function() {
+    this._div = L.DomUtil.create('div', 'mapLegend');
+    var red_dot = document.createElement('span');
+    red_dot.setAttribute('id', 'redDot');
+    red_dot.classList.add('dot');
+    var yellow_dot = document.createElement('span');
+    yellow_dot.setAttribute('id', 'yellowDot');
+    yellow_dot.classList.add('dot');
+    var green_dot = document.createElement('span');
+    green_dot.setAttribute('id', 'greenDot')
+    green_dot.classList.add('dot');
+    this._div.appendChild(red_dot);
+    this._div.innerHTML += '> Index Nasional';
+    this._div.appendChild(yellow_dot);
+    this._div.innerHTML += '= Index Nasional';
+    this._div.appendChild(green_dot);
+    this._div.innerHTML += '< Index Nasional';
+    return this._div;
+}
+legend.addTo(map);
