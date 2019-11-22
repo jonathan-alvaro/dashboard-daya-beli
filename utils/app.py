@@ -60,8 +60,8 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                     },font={
                         'color': '#ccdbdc'
                     },
-                    paper_bgcolor='#4e8098',
-                    plot_bgcolor='#4e8098',
+                    paper_bgcolor='#284e66',
+                    plot_bgcolor='#284e66',
                     showlegend=True
                 )
             ),config={'displayModeBar': False}
@@ -140,8 +140,8 @@ def plot_prediction_graph_qoq(timestamps, data, prediction, inflation, title):
                 font={
                     'color': '#ccdbdc'
                 },
-                paper_bgcolor='#4e8098',
-                plot_bgcolor='#4e8098',
+                paper_bgcolor='#284e66',
+                plot_bgcolor='#284e66',
                 showlegend=True
             )
         ),
@@ -183,7 +183,7 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                     name='Daya Beli YoY',
                     mode='lines+markers',
                     line={
-                        'color':'#ccdbdc'
+                        'color':'#FF6961'
                     }
                 ),
                 go.Line(
@@ -192,14 +192,17 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                     name='Daya Beli YoY Prediksi',
                     mode='lines+markers',
                     line={
-                        'color':prediction_line_color
+                        'color':'#FDFD96'
                     }
                 ),
                 go.Line(
                     x=timestamps,
                     y=ihk, 
                     name='IHK YoY',
-                    mode='lines+markers'
+                    mode='lines+markers',
+                    line={
+                        'color':'#77dd77'
+                    }
                 ),
                 go.Line(
                     x=timestamps,
@@ -215,19 +218,24 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                 },
                 xaxis={
                     'showgrid':False,
+                    'showline':True,
+                    'linecolor': '#A9A9A9'
                 },
                 yaxis={
                     'title':{
                         'text':title
                     },
-                    'zerolinecolor':'black',
-                    'showgrid':False
+                    'gridcolor':'#A9A9A9',
+                    'zerolinecolor':'#A9A9A9',
+                    'showgrid':True,
+                    'showline':True,
+                    'linecolor': '#A9A9A9'
                 },
                 font={
                     'color': '#ccdbdc'
                 },
-                plot_bgcolor='#4e8098',
-                paper_bgcolor='#4e8098',
+                plot_bgcolor='#284e66',
+                paper_bgcolor='#284e66',
                 showlegend=True
             )
         ),
