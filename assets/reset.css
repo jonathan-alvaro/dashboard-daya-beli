@@ -5,3 +5,27 @@ body {
 p {
     color: #ccdbdc
 }
+
+.dot {
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+	display: inline-block;
+	margin: 1%;
+}
+
+#redDot {
+	background-color: #FF6961;
+}
+
+#greenDot {
+	background-color: #77DD77;
+}
+
+#yellowDot {
+	background-color: #FDFD96;
+}
+
+#blueDot {
+    background-color: #ADD8E6;
+}

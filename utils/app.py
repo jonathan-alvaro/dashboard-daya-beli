@@ -129,7 +129,7 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                 go.Line(
                     x=timestamps,
                     y=ihk, 
-                    name='IHK YoY',
+                    name='Perubahan IHK YoY',
                     mode='lines+markers',
                     line={
                         'color':'#77dd77'
@@ -165,18 +165,13 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                     'showline':True,
                     'linecolor': '#A9A9A9'
                 },
-                legend={
-                    'xanchor':'right',
-                    'yanchor':'top',
-                    'x':0,
-                    'y':0
-                },
                 font={
                     'color': '#ccdbdc'
                 },
                 plot_bgcolor='#284e66',
                 paper_bgcolor='#284e66',
-                showlegend=True
+                showlegend=False,
+                autosize=True
             )
         ),
         config={

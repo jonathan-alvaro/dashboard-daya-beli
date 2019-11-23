@@ -146,6 +146,31 @@ def refresh_content(selected_menu):
                         'alignSelf': 'right',
                         'marginRight':'1%'
                     }
+                ),
+                html.Div(
+                    [
+                        html.P([
+                            html.Span(className='dot', id='redDot'),
+                            'Daya Beli YoY'
+                        ]),
+                        html.P([
+                            html.Span(className='dot', id='yellowDot'),
+                            'Daya Beli YoY Prediksi'
+                        ]),
+                        html.P([
+                            html.Span(className='dot', id='greenDot'),
+                            'Perubahan IHK YoY'
+                        ]),
+                        html.P([
+                            html.Span(className='dot', id='blueDot'),
+                            'Pendapatan Nasional YoY'
+                        ])
+                    ],
+                    style={
+                        'display':'flex',
+                        'alignCOntent':'center',
+                        'flexDirection':'column'
+                    }
                 )
             ],
             style={
