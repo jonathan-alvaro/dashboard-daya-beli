@@ -5,21 +5,42 @@ function update_map() {
     var output = document.getElementById("sliderValue");
     var json = get_food_data();
     json.then(function(res) {
-        var data = JSON.parse(res);
-        var quarter_change = slider.value;
-        var year = 2017;
-        var quarter = 0;
-        if (quarter_change % 4 == 0) {
-            year = year + quarter_change / 4 - 1;
-            quarter = quarter_change - (quarter_change / 4 - 1) * 4;
-        } else {
-            year = year + Math.floor(quarter_change / 4);
-            quarter = quarter_change % 4;
+        var months_since_start = parseInt(slider.value);
+        var year = 2016;
+        var month = 2;
+        month = month + months_since_start;
+        if (month > 12) {
+            if (month % 12 != 0) {
+                var year_diff = Math.trunc(month / 12);
+                year = year + year_diff;
+                month = month - (12 * year_diff);
+            } else {
+                var year_diff = month / 12 - 1;
+                year = year + year_diff;
+                month = month - (12 * year_diff);
+            }
         }
-        var timecode = String(year) + '-Q' + String(quarter);
+
+        month_dict = {
+            '1': 'JAN',
+            '2': 'FEB',
+            '3': 'MAR',
+            '4': 'APR',
+            '5': 'MEI',
+            '6': 'JUN',
+            '7': 'JUL',
+            '8': 'AUG',
+            '9': 'SEP',
+            '10': 'OKT',
+            '11': 'NOV',
+            '12': 'DES'
+        };
+
+        var timecode = month_dict[String(month)]+ '-' + String(year);
 
         output.innerHTML = timecode;
 
+        var data = JSON.parse(res);
         var year_data = data[timecode];
         update_national_column(year_data);
         update_national_index();
