@@ -139,7 +139,10 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                     x=timestamps,
                     y=national_income,
                     name='Pendapatan Nasional YoY',
-                    mode='lines+markers'
+                    mode='lines+markers',
+                    line={
+                        'color':'#ADD8E6'
+                    }
                 )
             ], layout= go.Layout(
                 title={
