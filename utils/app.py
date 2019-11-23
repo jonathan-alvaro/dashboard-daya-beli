@@ -7,6 +7,16 @@ import dash_core_components as dcc
 def create_non_food_variable_graphs(predictors, targets, timestamps):
     graphs = []
     
+    graph_name_dict = {
+        'IKK': 'IKK',
+        'Car Sales': 'Penjualan Mobil',
+        'Motorcycle Sales': 'Penjualan Motor',
+        'Cement Consumption': 'Konsumsi Semen',
+        'Exchange Rate': 'Nilai Tukar',
+        'Daya Beli RT': 'Daya Beli Rumah Tangga',
+        'Retail Growth': 'Pertumbuhan Retail'
+    }
+
     for col in predictors:
         if col == 'Quarter':
             continue
@@ -20,7 +30,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         yaxis='y2',
                         mode='lines+markers',
                         line={
-                            'color':'#f2d4b7',
+                            'color':'#FF6961',
                             'width': 3
                         },
                         marker={
@@ -34,7 +44,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         yaxis='y',
                         mode='lines+markers',
                         line={
-                            'color':'#ccdbdc',
+                            'color':'#77DD77',
                             'width': 3
                         },
                         marker={
@@ -43,7 +53,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                     )
                 ], layout= go.Layout(
                     title={
-                        'text': '{} vs Daya Beli'.format(col),
+                        'text': '{} vs Daya Beli'.format(graph_name_dict[col]),
                         'xanchor': 'center',
                         'x': 0.5
                     },
@@ -53,21 +63,31 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                         'linecolor':'#A9A9A9'
                     },
                     yaxis={
-                        'title':'Change Daya Beli (%)',
+                        'title':{
+                            'text':'Change Daya Beli (%)',
+                            'font':{
+                                'color':'#77DD77'
+                            }
+                        },
                         'showgrid':False,
                         'gridcolor':'#A9A9A9',
-                        'zerolinecolor':'#A9A9A9',
+                        'zerolinecolor':'#77DD77',
                         'showgrid':True,
                         'showline':True,
                         'linecolor': '#A9A9A9'
 
                     },
                     yaxis2={
-                        'title':f'Change {col} (%)',
+                        'title':{
+                            'text':f'Change {col} (%)',
+                            'font':{
+                                'color':'#FF6961'
+                            }
+                        },
                         'side':'right',
                         'overlaying':'y',
                         'showgrid':False,
-                        'zerolinecolor':'#A9A9A9'
+                        'zerolinecolor':'#FF6961'
                     },font={
                         'color': '#ccdbdc'
                     },
