@@ -7,10 +7,9 @@ var map = L.map('map', {
 });
 
 function get_national_index_value() {
-    var table = document.getElementById("comparison-table");
-    var national_index = table.rows[11].cells[2].innerHTML;
+    var national_index = document.getElementById("national-index");
 
-    return national_index;
+    return national_index.innerHTML;
 }
 
 // Function for color per province
@@ -97,19 +96,33 @@ function render_table() {
     var table = document.createElement('table');
     table.setAttribute("id", "comparison-table");
 
-    for (var i = 0; i < 12; i++) {
+    for (var i = 0; i < 2; i++) {
+        var tr = table.insertRow();
+
+        for (var j = 0; j < 3; j++) {
+            var th = document.createElement('th');
+
+            if (i % 2 == 0) {
+                if (j % 3 == 2) {
+                    th.innerHTML = 'Nasional';
+                }
+            }
+
+            if (i % 2 == 1) {
+                if (j % 3 == 2) {
+                    th.id = 'national-index';
+                }
+            }
+
+            tr.appendChild(th);
+        }
+    }
+
+    for (var i = 0; i < 10; i++) {
         var tr = table.insertRow();
 
         for (var j = 0; j < 3; j++) {
             var td = tr.insertCell();
-
-            if (i == 0) {
-                if (j == 1) {
-                    td.appendChild(document.createTextNode('Provinsi'));
-                } else if (j == 2) {
-                    td.appendChild(document.createTextNode('Nasional'));
-                }
-            }
         }
     }
 
@@ -119,10 +132,11 @@ function render_table() {
         var time_data = api_data[Object.keys(api_data)[0]];
         var location_data = time_data[Object.keys(time_data)[0]];
         var commodities = Object.keys(location_data);
+        commodities.splice(commodities.indexOf('index'), 1);
 
-        for (var i = 1, row; row = table.rows[i]; i++) {
+        for (var i = 2, row; row = table.rows[i]; i++) {
             var header_cell = row.cells[0];
-            header_cell.innerHTML = commodities[i-1];
+            header_cell.innerHTML = commodities[i-2];
         }
     });
 
@@ -133,30 +147,26 @@ function update_national_column(year_data) {
     var table = document.getElementById("comparison-table");
     var national_data = year_data["-1"];
 
-    for (var i = 1, row; row = table.rows[i]; i++) {
+    for (var i = 2, row; row = table.rows[i]; i++) {
         var row_header = row.cells[0];
         var national_val = national_data[row_header.innerHTML];
         row.cells[2].innerHTML = national_val.toFixed(2);
     }
+
+    table.rows[1].cells[2].innerHTML = national_data['index'].toFixed(2);
 }
 
 function update_province_column(province_data, province_name) {
     var table = document.getElementById("comparison-table");
 
-    table.rows[0].cells[0].innerHTML = province_name
-
-    for (var i = 1, row; row = table.rows[i]; i++) {
+    for (var i = 2, row; row = table.rows[i]; i++) {
         var row_header = row.cells[0];
         var province_val = province_data[row_header.innerHTML];
         row.cells[1].innerHTML = province_val.toFixed(2);
     }
-}
 
-function update_national_index() {
-    var national_index = get_national_index_value();
-    var index_text_div = document.getElementById("index-value");
-
-    index_text_div.innerHTML = national_index;
+    table.rows[1].cells[1].innerHTML = province_data['index'].toFixed(2);
+    table.rows[0].cells[1].innerHTML = province_name;
 }
 
 render_table();
