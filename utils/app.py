@@ -18,7 +18,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
     }
 
     for col in predictors:
-        if col == 'Quarter':
+        if col == 'Quarter' or col == 'Tahun':
             continue
         graph = dcc.Graph(
             figure=go.Figure(
@@ -53,7 +53,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                     )
                 ], layout= go.Layout(
                     title={
-                        'text': '{} vs Daya Beli'.format(graph_name_dict[col]),
+                        'text': '{} vs Daya Beli'.format(graph_name_dict.get(col, col)),
                         'xanchor': 'center',
                         'x': 0.5
                     },
