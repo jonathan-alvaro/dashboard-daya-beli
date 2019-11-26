@@ -102,22 +102,11 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
     return graphs
 
 def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income, title):
-
-    pred_quarter = int(timestamps.tail(1).values[0][-1]) + 1
-    pred_year = int(timestamps.tail(1).values[0][:4])
-
-    if pred_quarter > 4:
-        pred_quarter -= 4
-        pred_year += 1
-
-    timestamps[len(timestamps)] = f'{pred_year}-Q{pred_quarter}'
-    timestamps = timestamps.apply(lambda x : x[2:])
-    timestamps = timestamps.reset_index(drop=True)
-
+    
     prediction = pd.Series(prediction)
     data = pd.Series(data)
 
-    prediction = np.append(data.tail(1).values, prediction.tail(1).values)
+    prediction = np.append(data.tail(2).values[0:1], prediction.tail(1).values)
     prediction = pd.Series(prediction)
 
     if prediction.tail(1).values[0] < data.tail(1).values[0]:
