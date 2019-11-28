@@ -356,7 +356,11 @@ def create_homepage():
             'justifyContent':'center',
             'flexDirection':'column',
             'display':'flex',
-            'height':'100vh'
+            'height':'100vh',
+            'position':'fixed',
+            'top':'0px',
+            'bottom':'0px',
+            'z-index':'-1'
         }
     )
 

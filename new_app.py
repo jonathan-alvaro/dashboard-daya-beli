@@ -27,19 +27,70 @@ server = app.server
 # Determine HTML layout
 app.layout = html.Div(
     [
-        dcc.Tabs(
-            id='dashboard-tabs', value='home',
-            children=[
-                dcc.Tab(label='Beranda', value='home'),
-                dcc.Tab(label='Nowcasting Daya Beli', value='nowcasting'),
-                dcc.Tab(label='Indikator Daya Beli (Komoditas Pangan)', value='food-index'),
-                dcc.Tab(label='Indikator Daya Beli (Komoditas Non Pangan)', value='non-food-index')
-            ]
+        html.Div(
+            html.P(
+                'Daya Beli Masyarakat',
+                style={
+                    'font-family':'serif',
+                    'fontStyle':'bold'
+                }
+            ),
+            style={
+                'float':'left',
+                'display':'flex',
+                'alignItems':'center',
+                'justifyContent':'center',
+                'fontSize':'2em'
+            }
         ),
-        html.Div(id='content')
+        html.Div(
+            dcc.Tabs(
+                id='dashboard-tabs', value='home',
+                children=[
+                    dcc.Tab(
+                        label='Beranda', value='home',
+                        selected_style={
+                            'borderBottom':'5px solid #ffc000'
+                        }
+                    ),
+                    dcc.Tab(
+                        label='Nowcasting Daya Beli', value='nowcasting',
+                        selected_style={
+                            'borderBottom':'5px solid #ffc000'
+                        }
+                    ),
+                    dcc.Tab(
+                        label='Indikator Daya Beli (Komoditas Pangan)', value='food-index',
+                        selected_style={
+                            'borderBottom':'5px solid #ffc000'
+                        }
+                    ),
+                    dcc.Tab(
+                        label='Indikator Daya Beli (Komoditas Non Pangan)', value='non-food-index',
+                        selected_style={
+                            'borderBottom':'5px solid #ffc000'
+                        }
+                    )
+                ],
+                colors={
+                    'background':'transparent'
+                }
+            ),
+            style={
+                'width':'50%',
+                'float':'right'
+            }
+        ),
+        html.Div(
+            id='content',
+            style={
+                'clear':'both'
+            }
+        )
     ],
     style={
-        'height':'100vh'
+        'height':'100vh',
+        'width':'100%'
     }
 )
 
