@@ -25,17 +25,23 @@ app.css.append_css({'external_url': 'reset.css'})
 server = app.server
 
 # Determine HTML layout
-app.layout = html.Div([
-    dcc.Tabs(
-        id='dashboard-tabs', value='nowcasting',
-        children=[
-            dcc.Tab(label='Nowcasting Daya Beli', value='nowcasting'),
-            dcc.Tab(label='Indikator Daya Beli (Komoditas Pangan)', value='food-index'),
-            dcc.Tab(label='Indikator Daya Beli (Komoditas Non Pangan)', value='non-food-index')
-        ]
-    ),
-    html.Div(id='content')
-])
+app.layout = html.Div(
+    [
+        dcc.Tabs(
+            id='dashboard-tabs', value='home',
+            children=[
+                dcc.Tab(label='Beranda', value='home'),
+                dcc.Tab(label='Nowcasting Daya Beli', value='nowcasting'),
+                dcc.Tab(label='Indikator Daya Beli (Komoditas Pangan)', value='food-index'),
+                dcc.Tab(label='Indikator Daya Beli (Komoditas Non Pangan)', value='non-food-index')
+            ]
+        ),
+        html.Div(id='content')
+    ],
+    style={
+        'height':'100vh'
+    }
+)
 
 @app.callback(
     Output('content', 'children'),
@@ -51,7 +57,10 @@ def refresh_content(selected_menu):
     # Forecast future data
     yoy_preds = predict_yoy(model_dir, yoy_X)
 
-    if selected_menu == 'nowcasting':
+    if selected_menu == 'home':
+        return create_homepage()
+
+    elif selected_menu == 'nowcasting':
         return create_nowcasting_tab(
             yoy_X, yoy_y, yoy_preds, yoy_ihk, yoy_national_income, yoy_timestamps
         )

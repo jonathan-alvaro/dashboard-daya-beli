@@ -322,3 +322,42 @@ def create_nowcasting_tab(
             'flexDirection':'row'
         }
     )
+
+def create_homepage():
+    body_text = []
+
+    body_text.append(html.H1(
+        'INFLASI',
+        style={
+            'textAlign':'center'
+        }
+    ))
+
+    body_text.append(html.P(
+        [
+            html.I('Dashboard Early Warning System'),
+            ' Inflasi merupakan sistem pemantauan inflasi yang menampilkan ',
+            html.I('Nowcasting'),
+            ' Inflasi serta Pemetaan permasalahany penyebab inflasi di tingkat nasional dan 34 Provinsi secara ',
+            html.I('real time')
+        ],
+        style={
+            'width':'75%',
+            'textAlign':'center'
+        }
+    ))
+
+    main_div = html.Div(
+        children=body_text,
+        style={
+            'backgroundImage':'url("assets/background.png")',
+            'backgroundSize':'auto auto',
+            'alignItems':'center',
+            'justifyContent':'center',
+            'flexDirection':'column',
+            'display':'flex',
+            'height':'100vh'
+        }
+    )
+
+    return main_div
