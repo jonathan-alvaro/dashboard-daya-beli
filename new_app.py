@@ -24,41 +24,47 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.css.append_css({'external_url': 'reset.css'})
 server = app.server
 
-# Load YoY data
-yoy_X, yoy_y, yoy_ihk, yoy_national_income, yoy_timestamps = load_yoy_data(
-    os.path.join(data_dir, 'yoy_dataset_all.csv')
-)
-
-# Forecast future data
-yoy_preds = predict_yoy(model_dir, yoy_X)
-
 # Determine HTML layout
 app.layout = html.Div([
-    dcc.Tabs([
-        dcc.Tab(
-            label='Nowcasting Daya Beli',
-            children=[
-                create_nowcasting_tab(
-                    yoy_X, yoy_y, yoy_preds, yoy_ihk, yoy_national_income, yoy_timestamps
-                )
-            ]
-        ),
-        dcc.Tab(
-            label='Ukuran Daya Beli (Ukuran Indeks 10 Komoditas Strategis)',
-            children = [
-                html.Iframe(
-                id='map-frame',
-                src=os.path.join('assets', 'test_map.html'),
-                width='100%',
-                height='600'
-            )]
-        ),
-        dcc.Tab(
-            label='Ukuran Daya Beli (Komoditas Non-Pangan)',
-            children=create_non_food_variable_graphs(yoy_X, yoy_y, yoy_timestamps)
-        )
-    ])
+    dcc.Tabs(
+        id='dashboard-tabs', value='nowcasting',
+        children=[
+            dcc.Tab(label='Nowcasting Daya Beli', value='nowcasting'),
+            dcc.Tab(label='Indikator Daya Beli (Komoditas Pangan)', value='food-index'),
+            dcc.Tab(label='Indikator Daya Beli (Komoditas Non Pangan)', value='non-food-index')
+        ]
+    ),
+    html.Div(id='content')
 ])
+
+@app.callback(
+    Output('content', 'children'),
+    [Input('dashboard-tabs', 'value')]
+)
+def refresh_content(selected_menu):
+
+    # Load YoY data
+    yoy_X, yoy_y, yoy_ihk, yoy_national_income, yoy_timestamps = load_yoy_data(
+        os.path.join(data_dir, 'yoy_dataset_all.csv')
+    )
+    
+    # Forecast future data
+    yoy_preds = predict_yoy(model_dir, yoy_X)
+
+    if selected_menu == 'nowcasting':
+        return create_nowcasting_tab(
+            yoy_X, yoy_y, yoy_preds, yoy_ihk, yoy_national_income, yoy_timestamps
+        )
+
+    elif selected_menu == 'food-index':
+        return [html.Iframe(
+            id='map-frame',
+            src=os.path.join('assets', 'test_map.html'),
+            width='100%',
+            height='600'
+        )]
+    elif selected_menu == 'non-food-index':
+        return create_non_food_variable_graphs(yoy_X, yoy_y, yoy_timestamps)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
