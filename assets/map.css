@@ -85,7 +85,7 @@ table tr:first-child th{
   border: 0;
 }
 table tr:nth-child(2) th{
-	font-size: 3em;
+	font-size: 2em;
 	border: 0;
 }
 table tr td:first-child,
