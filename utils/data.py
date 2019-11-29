@@ -43,8 +43,6 @@ def load_yoy_data(csv_path, num_quarters=12) -> (
 
     X = X.fillna(0)
 
-    print(X.columns)
-
     return (X, y, ihk, national_income, timestamps)
 
 def create_timestamp(years: pd.Series, quarters: pd.Series) -> pd.Series:

@@ -195,23 +195,9 @@ def create_nowcasting_tab(
     divs = []
     
     yoy_latest_pred = yoy_preds[-1]
-    yoy_latest_data = yoy_y.tail(1).values[0]
+    yoy_latest_data = yoy_y.tail(2).values[0]
     yoy_latest_timestamp = yoy_timestamps.tail(1).values[0]
     yoy_change = yoy_latest_pred - yoy_latest_data
-
-    yoy_new_year = int(yoy_latest_timestamp[:4])
-    yoy_new_quarter = int(yoy_latest_timestamp[-1]) + 1
-    if yoy_new_quarter > 4:
-        yoy_new_year += 1
-        yoy_new_quarter %= 4
-    yoy_new_timestamp = f'{yoy_new_year}-Q{yoy_new_quarter}'
-
-    if yoy_change >= 0:
-        yoy_text = f'Naik {round(yoy_change, 2)}%'
-        yoy_text_color = 'green'
-    else:
-        yoy_text = f'Turun {-round(yoy_change, 2)}%'
-        yoy_text_color = 'red'
 
     divs.append(html.Div(
         [
@@ -230,7 +216,7 @@ def create_nowcasting_tab(
             html.Div(
                 [
                     html.P(
-                        f"Prediksi Daya Beli YoY {yoy_new_timestamp}",
+                        f"Prediksi Daya Beli YoY {yoy_timestamps.tail(1).values[0]}",
                         style={
                             'alignSelf':'center',
                             'fontSize':'1em'
@@ -275,7 +261,6 @@ def create_nowcasting_tab(
                     'display':'flex',
                     'alignContent':'center',
                     'flexDirection':'column',
-                    'color': yoy_text_color,
                     'alignSelf': 'right',
                     'marginRight':'1%'
                 }
