@@ -178,8 +178,8 @@ def plot_prediction_graph_yoy(timestamps, data, prediction, ihk, national_income
                 font={
                     'color': '#ccdbdc'
                 },
-                plot_bgcolor='#284e66',
-                paper_bgcolor='#284e66',
+                plot_bgcolor='rgba(0, 0, 0, 0)',
+                paper_bgcolor='rgba(0, 0, 0, 0)',
                 showlegend=False,
                 autosize=True
             )
@@ -207,7 +207,11 @@ def create_nowcasting_tab(
             )
 
         ], style={
-            'width':'100%'
+            'width':'100%',
+            'backgroundImage':'url("assets/map.png")',
+            'backgroundSize':'100%',
+            'backgroundPosition':'center',
+            'backgroundRepeat':'no-repeat'
         }
     ))
 
