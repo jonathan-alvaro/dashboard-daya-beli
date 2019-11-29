@@ -327,7 +327,7 @@ def create_homepage():
     body_text = []
 
     body_text.append(html.H1(
-        'INFLASI',
+        'DAYA BELI MASYARAKAT',
         style={
             'textAlign':'center'
         }
@@ -335,10 +335,10 @@ def create_homepage():
 
     body_text.append(html.P(
         [
-            html.I('Dashboard Early Warning System'),
-            ' Inflasi merupakan sistem pemantauan inflasi yang menampilkan ',
+            html.I('Dashboard Daya Beli Masyarakat'),
+            ' merupakan sistem pemantauan yang menampilkan ',
             html.I('Nowcasting'),
-            ' Inflasi serta Pemetaan permasalahany penyebab inflasi di tingkat nasional dan 34 Provinsi secara ',
+            ' Daya Beli serta pergerakan indikator daya beli secara ',
             html.I('real time')
         ],
         style={
