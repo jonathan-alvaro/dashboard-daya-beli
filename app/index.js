@@ -17,4 +17,4 @@ app.get('/data/food', (req, res) => {
     res.status(200).send(json_string);
 })
 
-app.listen(port, () => console.log('Request sent'));
+app.listen(port);
