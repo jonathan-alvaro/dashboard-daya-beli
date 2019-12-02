@@ -70,6 +70,18 @@ app.layout = html.Div(
                         selected_style={
                             'borderBottom':'5px solid #ffc000'
                         }
+                    ),
+                    dcc.Tab(
+                        label='About', value='about',
+                        selected_style={
+                            'borderBottom':'5px solid #ffc000'
+                        }
+                    ),
+                    dcc.Tab(
+                        label='Metode', value='methods',
+                        selected_style={
+                            'borderBottom':'5px solid #ffc000'
+                        }
                     )
                 ],
                 colors={
@@ -125,6 +137,10 @@ def refresh_content(selected_menu):
         )]
     elif selected_menu == 'non-food-index':
         return create_non_food_variable_graphs(yoy_X, yoy_y, yoy_timestamps)
+    elif selected_menu == 'about':
+        return create_about_page()
+    elif selected_menu == 'methods':
+        return create_methods_page()
 
 if __name__ == '__main__':
     app.run_server(debug=True)
