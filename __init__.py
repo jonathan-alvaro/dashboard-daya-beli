@@ -1,3 +1,4 @@
+import joblib
 import os
 from sklearn.metrics import mean_squared_error
 
@@ -112,13 +113,9 @@ app.layout = html.Div(
 )
 def refresh_content(selected_menu):
 
-    # Load YoY data
-    yoy_X, yoy_y, yoy_ihk, yoy_national_income, yoy_timestamps = load_yoy_data(
-        os.path.join(data_dir, 'yoy_dataset_all.csv')
+    yoy_X, yoy_y, yoy_ihk, yoy_national_income, yoy_timestamps, yoy_preds = joblib.load(
+        os.path.join(data_dir, 'nowcasting.pkl')
     )
-    
-    # Forecast future data
-    yoy_preds = predict_yoy(model_dir, yoy_X)
 
     if selected_menu == 'home':
         return create_homepage()
