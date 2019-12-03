@@ -31,12 +31,14 @@ function getColor(d) {
 // How to color each province
 function style(feature) {
     if (typeof feature.properties.index === 'undefined') {
-        var data = get_food_data();
+        var output = document.getElementById("sliderValue");
+        var month = output.innerHTML.substr(0, 3);
+        var year = output.innerHTML.substr(4, 4);
+        var data = get_food_data(year, month);
 
         data.then((res) => {
             var res = JSON.parse(res);
-            var output = document.getElementById("sliderValue");
-            var province_data = res[output.innerHTML][String(feature.properties.ID)];
+            var province_data = res[String(feature.properties.ID)];
             feature.properties.index = province_data['index'];
         });
     }
@@ -58,11 +60,13 @@ function highlightFeature(e) {
         dashArray: '',
         fillOpacity: 0.7
     })
-    var province_json = get_food_data();
+    var time_label = document.getElementById("sliderValue").innerHTML;
+    var month = time_label.substr(0, 3);
+    var year = time_label.substr(4, 4);
+    var province_json = get_food_data(year, month);
     province_json.then((food_province_json) => {
         var data = JSON.parse(food_province_json);
-        var time_label = document.getElementById("sliderValue").innerHTML;
-        var province_data = data[time_label][layer.feature.properties.ID];
+        var province_data = data[layer.feature.properties.ID];
         update_province_column(province_data, layer.feature.properties.Propinsi);
     });
 }
@@ -126,10 +130,9 @@ function render_table() {
         }
     }
 
-    var data = get_food_data();
+    var data = get_food_data(2017, 'JAN');
     data.then((res) => {
-        var api_data = JSON.parse(res);
-        var time_data = api_data[Object.keys(api_data)[0]];
+        var time_data = JSON.parse(res);
         var location_data = time_data[Object.keys(time_data)[0]];
         var commodities = Object.keys(location_data);
         commodities.splice(commodities.indexOf('index'), 1);

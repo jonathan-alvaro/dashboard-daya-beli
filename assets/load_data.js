@@ -1,8 +1,8 @@
-function get_food_data() {
+function get_food_data(year, month) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
 
-        xhr.open("GET","http://localhost:4000/data/food",true);
+        xhr.open("GET",`http://localhost:4000/data/food/${year}/${month}`,true);
         xhr.send();
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
