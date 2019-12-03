@@ -66,7 +66,7 @@ function highlightFeature(e) {
     var province_json = get_food_data(year, month);
     province_json.then((food_province_json) => {
         var data = JSON.parse(food_province_json);
-        var province_data = data[layer.feature.properties.ID];
+        var province_data = data[String(layer.feature.properties.ID)];
         update_province_column(province_data, layer.feature.properties.Propinsi);
     });
 }
