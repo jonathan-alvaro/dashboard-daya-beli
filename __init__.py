@@ -51,37 +51,49 @@ app.layout = html.Div(
                     dcc.Tab(
                         label='Beranda', value='home',
                         selected_style={
-                            'borderBottom':'5px solid #ffc000'
+                            'borderBottom':'5px solid #ffc000',
+                            'backgroundColor':'rgba(255,255,255,0.6)',
+                            'color':'black'
                         }
                     ),
                     dcc.Tab(
                         label='Nowcasting Daya Beli', value='nowcasting',
                         selected_style={
-                            'borderBottom':'5px solid #ffc000'
+                            'borderBottom':'5px solid #ffc000',
+                            'backgroundColor':'rgba(255,255,255,0.6)',
+                            'color':'black'
                         }
                     ),
                     dcc.Tab(
                         label='Indikator Daya Beli (Komoditas Pangan)', value='food-index',
                         selected_style={
-                            'borderBottom':'5px solid #ffc000'
+                            'borderBottom':'5px solid #ffc000',
+                            'backgroundColor':'rgba(255,255,255,0.6)',
+                            'color':'black'
                         }
                     ),
                     dcc.Tab(
                         label='Indikator Daya Beli (Komoditas Non Pangan)', value='non-food-index',
                         selected_style={
-                            'borderBottom':'5px solid #ffc000'
+                            'borderBottom':'5px solid #ffc000',
+                            'backgroundColor':'rgba(255,255,255,0.6)',
+                            'color':'black'
                         }
                     ),
                     dcc.Tab(
                         label='About', value='about',
                         selected_style={
-                            'borderBottom':'5px solid #ffc000'
+                            'borderBottom':'5px solid #ffc000',
+                            'backgroundColor':'rgba(255,255,255,0.6)',
+                            'color':'black'
                         }
                     ),
                     dcc.Tab(
                         label='Metode', value='methods',
                         selected_style={
-                            'borderBottom':'5px solid #ffc000'
+                            'borderBottom':'5px solid #ffc000',
+                            'backgroundColor':'rgba(255,255,255,0.6)',
+                            'color':'black'
                         }
                     )
                 ],
@@ -91,7 +103,8 @@ app.layout = html.Div(
             ),
             style={
                 'width':'50%',
-                'float':'right'
+                'float':'right',
+                'color':'black'
             }
         ),
         html.Div(
