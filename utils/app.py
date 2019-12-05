@@ -246,7 +246,7 @@ def create_nowcasting_tab(
             html.Div(
                 [
                     html.P(
-                        "Perubahan Daya Beli QtQ",
+                        "Perubahan daya beli dari 1Q sebelumny",
                         style={
                             'alignSelf':'center',
                             'fontSize':'1em'
