@@ -65,7 +65,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                     },
                     yaxis={
                         'title':{
-                            'text':'Change Daya Beli (%)',
+                            'text':'Perubahan Daya Beli (%)',
                             'font':{
                                 'color':'#77DD77'
                             }
@@ -80,7 +80,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
                     },
                     yaxis2={
                         'title':{
-                            'text':f'Change {col} (%)',
+                            'text':f'Perubahan {col} (%)',
                             'font':{
                                 'color':'#FF6961'
                             }
