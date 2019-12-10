@@ -1,5 +1,8 @@
+import datetime
 import json
 import os
+from shutil import copyfile
+import time
 from functools import reduce
 
 import pandas as pd
@@ -186,6 +189,10 @@ def load_cache_data(cache_path):
     # Load cached data
     return pd.read_csv(cache_path)
 
+def backup_cache(cache_path, backup_dir):
+    backup_path = os.path.join(backup_dir, f'{datetime.datetime.now()}.csv')
+    copyfile(cache_path, backup_path)
+
 def update_cache(new_data, cache_path):
     # Load cache and update with new data
     cache = load_cache_data(cache_path)
@@ -250,5 +257,6 @@ dfs = load_food_excels('update')
 new_df = merge_food_dfs(dfs)
 new_df = calculate_food_index_col(new_df)
 
+backup_cache('update/cache.csv', 'backup/')
 update_cache(new_df, 'update/cache.csv')
 generate_json_data('update/cache.csv', 'output/data.json')
