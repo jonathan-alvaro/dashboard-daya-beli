@@ -398,7 +398,7 @@ def create_about_page():
 def create_methods_page():
     return html.Div(
         [
-            html.H1('Methods (untuk prototipe)'),
+            html.H1('Methods'),
             html.H2('NowCasting Daya Beli'),
             html.P('Nowcasting daya beli bertujuan untuk memprediksi angka daya beli suatu quarter di tingkat nasional berdasarkan nilai-nilai variabel penjelas (yaitu variabel pangan dan non pangan) pada quarter yang sama. Prediksi dilakukan dengan menggunakan model regresi hasil pembelajaran mesin yang menyatakan pola data dari 20 variabel penjelas yang ada (dari periode Q1 2013 - Q1 2019). Regresi merupakan proses mencari relasi terbaik antara variabel bebas (regressor) X dan variabel terikat (response) Y, menentukan kekuatan relasi tersebut, dan memprediksi nilai response Y dari regressor X (Walpole, 2012). Dalam nowcasting daya beli, daya beli sebagai response (Y) dan 20 variabel penjelas sebagai regressor (X). Nilai daya beli sebagai response didapatkan dari laju pendapatan dikurangi laju IHK atau inflasi.'),
             html.Img(src='assets/system.png'),
