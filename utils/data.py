@@ -17,7 +17,7 @@ def load_yoy_data(csv_path, num_quarters=12) -> (
     national_income = X['National Income']
     ihk = X['IHK']
     X = X.drop(
-        ['Inflation', 'Daya Beli GDP', 'Daya Beli RT', 'Daya Beli Nasional', 'National Income', 'IHK'],
+        ['Daya Beli Nasional', 'National Income', 'IHK'],
         axis=1
     ).diff()
 
