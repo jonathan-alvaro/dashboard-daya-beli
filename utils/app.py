@@ -396,7 +396,8 @@ def create_about_page():
             ])
         ],
         style={
-            'padding':'1%'
+            'padding':'2%',
+            'align':'justify'
         }
     )
 
@@ -425,6 +426,7 @@ def create_methods_page():
             'display':'flex',
             'alignItems':'center',
             'flexFlow':'column',
-            'padding':'1%'
+            'padding':'2%',
+            'align':'justify'
         }
     )
