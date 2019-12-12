@@ -29,13 +29,6 @@ server = app.server
 app.layout = html.Div(
     [
         html.Div(
-            html.P(
-                'Perubahan Daya Beli Masyarakat',
-                style={
-                    'font-family':'serif',
-                    'fontStyle':'bold'
-                }
-            ),
             style={
                 'float':'left',
                 'display':'flex',

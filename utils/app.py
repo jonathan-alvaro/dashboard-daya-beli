@@ -8,6 +8,20 @@ import dash_html_components as html
 def create_non_food_variable_graphs(predictors, targets, timestamps):
     graphs = []
     
+    variable_cols = [
+        'Cement Consumption',
+        'Motorcycle Sales',
+        'Kredit Konsumsi',
+        'IHSG',
+        'Nilai Tukar Petani',
+        'Minyak Dunia',
+        'Exchange Rate',
+        'IKK',
+        'Car Sales',
+        'DPK',
+        'Daya Beli Nasional'
+    ]
+
     graph_name_dict = {
         'IKK': 'IKK',
         'Car Sales': 'Penjualan Mobil',
@@ -18,7 +32,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
         'Retail Growth': 'Pertumbuhan Retail'
     }
 
-    for col in predictors:
+    for col in variable_cols:
         if col == 'Quarter' or col == 'Tahun':
             continue
         graph = dcc.Graph(
