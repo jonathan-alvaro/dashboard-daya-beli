@@ -67,13 +67,17 @@ def get_month_shorthand(month_number):
 def load_food_data(xlsx_path, food_name):
     # Read data
     df = pd.read_excel(
-        xlsx_path
+        xlsx_path,
+        skiprows=6,
+        index_col=1
     )
 
-    print(food_name)
+    # Drop unused column
+    df = df.drop(['No.'], axis=1)
 
-    # Rename columns
-    df.columns = ['Tanggal', 'Harga', 'Provinsi']
+    # Reshape data by changing columns into rows
+    df = df.stack().reset_index()
+    df.columns = ['Provinsi', 'Tanggal', 'Harga']
 
     # Remove rows where the value is missing
     df = df.loc[
