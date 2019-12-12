@@ -79,6 +79,9 @@ def load_food_data(xlsx_path, food_name):
     ].reset_index(drop=True)
     df['Harga'] = df['Harga'].astype(float)
 
+    # Remove whitespace from province name
+    df['Provinsi'] = df['Provinsi'].apply(lambda x: x.strip())
+
     # Split date into three columns
     df['Bulan'] = pd.to_datetime(df['Tanggal'], format='%d/%m/%Y').apply(lambda x: int(x.month))
     df['Tahun'] = pd.to_datetime(df['Tanggal'], format='%d/%m/%Y').apply(lambda x: int(x.year))

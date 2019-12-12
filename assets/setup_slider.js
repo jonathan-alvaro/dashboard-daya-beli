@@ -46,6 +46,9 @@ function update_map() {
 
         geojson.eachLayer((layer) => {
             var id = layer.feature.properties.ID;
+            console.log(month_data);
+            console.log(id);
+            console.log(month_data[id])
             layer.feature.properties.index = month_data[id]['index'];
         });
 
