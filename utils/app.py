@@ -203,7 +203,7 @@ def create_nowcasting_tab(
         [
             plot_prediction_graph_yoy(
                 yoy_timestamps, yoy_y, yoy_preds,
-                yoy_ihk, yoy_national_income, 'Daya Beli YoY'
+                yoy_ihk, yoy_national_income, 'Perubahan Daya Beli YoY'
             )
 
         ], style={
@@ -277,7 +277,7 @@ def create_nowcasting_tab(
                     ]),
                     html.P([
                         html.Span(className='dot', id='yellowDot'),
-                        'Nowcasting Daya Beli YoY Prediksi'
+                        'Nowcasting Perubahan Daya Beli YoY Prediksi'
                     ]),
                     html.P([
                         html.Span(className='dot', id='greenDot'),

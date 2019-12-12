@@ -30,7 +30,7 @@ app.layout = html.Div(
     [
         html.Div(
             html.P(
-                'Daya Beli Masyarakat',
+                'Perubahan Daya Beli Masyarakat',
                 style={
                     'font-family':'serif',
                     'fontStyle':'bold'
