@@ -41,7 +41,8 @@ app.layout = html.Div(
                 'display':'flex',
                 'alignItems':'center',
                 'justifyContent':'center',
-                'fontSize':'2em'
+                'fontSize':'2em',
+                'padding':'1%'
             }
         ),
         html.Div(
