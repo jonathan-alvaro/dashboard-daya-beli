@@ -203,7 +203,7 @@ def create_nowcasting_tab(
         [
             plot_prediction_graph_yoy(
                 yoy_timestamps, yoy_y, yoy_preds,
-                yoy_ihk, yoy_national_income, 'Perubahan Daya Beli YoY'
+                yoy_ihk, yoy_national_income, 'Daya Beli YoY'
             )
 
         ], style={
@@ -220,7 +220,7 @@ def create_nowcasting_tab(
             html.Div(
                 [
                     html.P(
-                        f"Prediksi Daya Beli YoY {yoy_timestamps.tail(1).values[0]}",
+                        f"Nowcasting Perubahan Daya Beli YoY {yoy_timestamps.tail(1).values[0]}",
                         style={
                             'alignSelf':'center',
                             'fontSize':'1em'
@@ -246,7 +246,7 @@ def create_nowcasting_tab(
             html.Div(
                 [
                     html.P(
-                        "Perubahan daya beli dari 1Q sebelumnya",
+                        "Perubahan Daya Beli dari 1Q Sebelumnya",
                         style={
                             'alignSelf':'center',
                             'fontSize':'1em'
@@ -273,11 +273,11 @@ def create_nowcasting_tab(
                 [
                     html.P([
                         html.Span(className='dot', id='redDot'),
-                        'Daya Beli YoY'
+                        'Perubahan Daya Beli YoY'
                     ]),
                     html.P([
                         html.Span(className='dot', id='yellowDot'),
-                        'Daya Beli YoY Prediksi'
+                        'Nowcasting Daya Beli YoY Prediksi'
                     ]),
                     html.P([
                         html.Span(className='dot', id='greenDot'),
@@ -285,7 +285,7 @@ def create_nowcasting_tab(
                     ]),
                     html.P([
                         html.Span(className='dot', id='blueDot'),
-                        'Pendapatan Nasional YoY'
+                        'Perubahan Pendapatan Nasional YoY'
                     ])
                 ],
                 style={

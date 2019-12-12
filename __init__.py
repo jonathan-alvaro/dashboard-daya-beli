@@ -57,7 +57,7 @@ app.layout = html.Div(
                         }
                     ),
                     dcc.Tab(
-                        label='Nowcasting Daya Beli', value='nowcasting',
+                        label='Nowcasting & Forecasting Daya Beli', value='nowcasting',
                         selected_style={
                             'borderBottom':'5px solid #ffc000',
                             'backgroundColor':'rgba(255,255,255,0.6)',
