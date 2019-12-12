@@ -18,8 +18,7 @@ def create_non_food_variable_graphs(predictors, targets, timestamps):
         'Exchange Rate',
         'IKK',
         'Car Sales',
-        'DPK',
-        'Daya Beli Nasional'
+        'DPK'
     ]
 
     graph_name_dict = {
