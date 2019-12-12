@@ -12,6 +12,8 @@ yoy_X, yoy_y, yoy_ihk, yoy_national_income, yoy_timestamps = load_yoy_data(
     os.path.join(data_dir, 'yoy_dataset_all.csv')
 )
 
+print(yoy_X)
+
 # Forecast future data
 yoy_preds = predict_yoy(model_dir, yoy_X)
 

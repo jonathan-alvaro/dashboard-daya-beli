@@ -70,8 +70,6 @@ def load_food_data(xlsx_path, food_name):
         xlsx_path
     )
 
-    print(food_name)
-
     # Rename columns
     df.columns = ['Tanggal', 'Harga', 'Provinsi']
 
