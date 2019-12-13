@@ -29,19 +29,13 @@ server = app.server
 app.layout = html.Div(
     [
         html.Div(
-            html.P(
-                'Daya Beli Masyarakat',
-                style={
-                    'font-family':'serif',
-                    'fontStyle':'bold'
-                }
-            ),
             style={
                 'float':'left',
                 'display':'flex',
                 'alignItems':'center',
                 'justifyContent':'center',
-                'fontSize':'2em'
+                'fontSize':'2em',
+                'padding':'1%'
             }
         ),
         html.Div(
@@ -57,7 +51,7 @@ app.layout = html.Div(
                         }
                     ),
                     dcc.Tab(
-                        label='Nowcasting Daya Beli', value='nowcasting',
+                        label='Nowcasting & Forecasting Daya Beli', value='nowcasting',
                         selected_style={
                             'borderBottom':'5px solid #ffc000',
                             'backgroundColor':'rgba(255,255,255,0.6)',
