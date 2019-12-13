@@ -6,6 +6,7 @@ from functools import reduce
 
 DB_DATA_PATH = 'database/'
 DATASET_PATH = 'yoy_dataset_all.csv'
+DATASET_PATH_QOQ = 'qoq_dataset_all.csv'
 
 def copytree(src, dst, symlinks=False, ignore=None):
     for item in os.listdir(src):
@@ -49,6 +50,27 @@ def update_dataset(db_path=DB_DATA_PATH, dataset_path=DATASET_PATH):
         merged_data.to_csv(dataset_path, index=False)
         print("Dataset successfully updated")
 
+def update_dataset_qoq(db_path=DB_DATA_PATH, dataset_path=DATASET_PATH_QOQ):
+    if backup(db_path):
+        filenames = os.listdir(db_path)
+        all_dataframes = []
+        for name in filenames:
+            df = pd.read_csv('{}/{}'.format(DB_DATA_PATH, name))
+            all_dataframes.append(df)
+        merged_data = reduce(
+            lambda left, right: pd.merge(left, right, on=['Tahun', 'Quarter'], how='inner'),
+            all_dataframes
+        )
+        cols = merged_data.columns
+        cols = cols.drop(['Tahun', 'Quarter', 'Retail Growth'])
+        for col in cols:
+            merged_data[col] = merged_data[col].pct_change(1) * 100
+        merged_data = merged_data.dropna()
+        merged_data['Daya Beli Nasional'] = merged_data['Pendapatan Nasional'] - merged_data['IHK']
+        merged_data = merged_data.drop(['Pendapatan Nasional', 'IHK'], axis=1)
+        merged_data.to_csv(dataset_path, index=False)
+        print("Dataset successfully updated")
+
 def update_national_income_and_ihk(db_path=DB_DATA_PATH):
     ihk = pd.read_csv('{}9.IHK.csv'.format(DB_DATA_PATH))
     pendapatan_nasional = pd.read_csv('{}10.Pendapatan Nasional.csv'.format(DB_DATA_PATH))
@@ -70,6 +92,7 @@ def update_national_income_and_ihk(db_path=DB_DATA_PATH):
     return True
 
 update_dataset()
+update_dataset_qoq()
 update_national_income_and_ihk()
 
 
