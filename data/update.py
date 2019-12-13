@@ -51,6 +51,10 @@ def update_national_income_and_ihk(db_path=DB_DATA_PATH):
     ihk = pd.read_csv('{}9.IHK.csv'.format(DB_DATA_PATH))
     pendapatan_nasional = pd.read_csv('{}10.Pendapatan Nasional.csv'.format(DB_DATA_PATH))
     ihk = ihk.sort_values(by=['Tahun', 'Quarter'])
+    if ihk.tail(1)['IHK'].values == 0.0:
+        ihk.drop(ihk.tail(1).index, inplace=True)
+    if pendapatan_nasional.tail(1)['Pendapatan Nasional'].values == 0.0:
+        pendapatan_nasional.drop(pendapatan_nasional.tail(1).index, inplace=True)
     ihk['IHK'] = ihk['IHK'].pct_change(4) * 100
     ihk = ihk.dropna(subset=['IHK'])
     ihk.to_csv('ihk.csv', index=False)
