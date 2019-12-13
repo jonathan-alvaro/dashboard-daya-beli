@@ -18,6 +18,8 @@ def copytree(src, dst, symlinks=False, ignore=None):
 
 def backup(src=DB_DATA_PATH, dst='backup'):
     try:
+        if not os.path.exists(dst):
+            os.mkdir(dst)
         copytree(src, dst)
     except OSError:
         print ("Creation of the directory %s failed" % dst)
