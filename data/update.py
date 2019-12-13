@@ -47,6 +47,23 @@ def update_dataset(db_path=DB_DATA_PATH, dataset_path=DATASET_PATH):
         merged_data.to_csv(dataset_path, index=False)
         print("Dataset successfully updated")
 
+def update_national_income_and_ihk(db_path=DB_DATA_PATH):
+    ihk = pd.read_csv('{}9.IHK.csv'.format(DB_DATA_PATH))
+    pendapatan_nasional = pd.read_csv('{}10.Pendapatan Nasional.csv'.format(DB_DATA_PATH))
+    ihk = ihk.sort_values(by=['Tahun', 'Quarter'])
+    ihk['IHK'] = ihk['IHK'].pct_change(4) * 100
+    ihk = ihk.dropna(subset=['IHK'])
+    ihk.to_csv('ihk.csv', index=False)
+    print("Success updating IHK")
+    pendapatan_nasional = pendapatan_nasional.sort_values(by=['Tahun', 'Quarter'])
+    pendapatan_nasional['Pendapatan Nasional'] = pendapatan_nasional['Pendapatan Nasional'].pct_change(4) * 100
+    pendapatan_nasional.columns = ['Tahun', 'Quarter', 'National Income']
+    pendapatan_nasional = pendapatan_nasional.dropna(subset=['National Income'])
+    pendapatan_nasional.to_csv('national_income.csv', index=False)
+    print("Success Updating Pendapatan Nasional")
+    return True
+
 update_dataset()
+update_national_income_and_ihk()
 
 
