@@ -76,6 +76,7 @@ body {
 table {
 	border-collapse: collapse;
 	align-self: center;
+	white-space: nowrap;
 }
 table td, table th {
 	border: 3px solid #ccdbdc;
@@ -88,6 +89,9 @@ table tr:nth-child(2) th{
 	font-size: 2em;
 	border: 0;
 }
+table tr:nth-child(2) th:nth-child(2){
+	padding-right: 0.3em;
+}
 table tr td:first-child,
 table tr th:first-child {
   border-left: 0;
@@ -95,6 +99,12 @@ table tr th:first-child {
 table tr td:last-child,
 table tr th:last-child {
   border-right: 0;
+}
+
+table th img {
+	height: 0.5em;
+	display: inline-block;
+	margin-right: 2%;
 }
 
 .info {
