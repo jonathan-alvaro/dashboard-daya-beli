@@ -7,9 +7,9 @@ var map = L.map('map', {
 });
 
 function get_national_index_value() {
-    var national_index = document.getElementById("national-index");
+    var national_index = document.getElementById("national-index-hidden");
 
-    return national_index.innerHTML.substring(national_index.innerHTML.indexOf('>') + 1);
+    return national_index.innerHTML;
 }
 
 // Function for color per province
@@ -161,7 +161,9 @@ function update_national_column(year_data) {
     } else {
         table.rows[1].cells[2].innerHTML = "<img src=\"down.png\" />";
     }
-    table.rows[1].cells[2].innerHTML += national_data['index'].toFixed(2);
+    table.rows[1].cells[2].innerHTML += Math.abs(national_data['index'].toFixed(2));
+    var hidden_national = document.getElementById('national-index-hidden');
+    hidden_national.innerHTML = national_data['index'].toFixed(2);
 }
 
 function update_province_column(province_data, province_name) {
@@ -178,8 +180,11 @@ function update_province_column(province_data, province_name) {
     } else {
         table.rows[1].cells[1].innerHTML = "<img src=\"down.png\" />";
     }
-    table.rows[1].cells[1].innerHTML += province_data['index'].toFixed(2);
+    table.rows[1].cells[1].innerHTML += Math.abs(province_data['index'].toFixed(2));
     table.rows[0].cells[1].innerHTML = province_name;
+
+    var province_hidden = document.getElementById('province-index-hidden');
+    province_hidden.innerHTML = province_data['index'].toFixed(2);
 }
 
 render_table();

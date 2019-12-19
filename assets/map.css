@@ -156,3 +156,7 @@ table th img {
 	background: #4CAF50; /* Green background */
 	cursor: pointer; /* Cursor on hover */
 }
+
+#national-index-hidden, #province-index-hidden{
+	display: none;
+}
